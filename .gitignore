@@ -1,0 +1,6 @@
+ping-pong/db/*
+ping-pong/incremental_db/*
+ping-pong/output_files/*
+ping-pong/*.qws
+ping-pong/*.bak
+*~
