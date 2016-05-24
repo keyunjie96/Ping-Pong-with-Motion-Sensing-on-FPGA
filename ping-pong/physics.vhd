@@ -28,6 +28,17 @@ end entity;
 architecture behav of physics is
 -- 这里需要一些signal 处理球、球拍各自的位置、速度、加速度（maybe球拍只需要加速度？计算动量？）
 -- 还需要一个component 获取球拍数据
+
 begin
+
+------------------  复位  ----------------------
+	process(rst)
+	begin
+		if (rst = '0') then
+			ballX <= ballXRange / 2;
+			ballY <= ballYRange / 3;
+			ballZ <= ballZRange / 5;
+		end if;
+	end process;
 
 end architecture;
