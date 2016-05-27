@@ -72,8 +72,8 @@ end component;
 begin
 -- 从内存读取一张固定的背景图片，上面覆盖文字（标题画面）、球和球拍（游戏画面）
 
-	digital_rom_ball : rom port map (ball_addr, clk2, ball_data);
-	digital_rom_pat1 : rom_pat port map (pat1_addr, clk2, pat1_data);
+	digital_rom_ball : rom port map (ball_addr, clk, ball_data);
+	digital_rom_pat1 : rom_pat port map (pat1_addr, clk, pat1_data);
 	
 	--------------------- 计算球和球拍的位置 ------------------------
 	process(ballX, ballY, ballZ)
@@ -87,14 +87,14 @@ begin
 	begin
 		pat1_dis_x <= pat1X * 640 / patXRange;
 		pat1_dis_y <= pat1Y * 480 / patYRange;
-		pat1_radius <= (patZRange - pat1Z) / 8 + 15;
+		pat1_radius <= (patZRange - pat1Z) / 8 + 35;
 	end process;
 	
 	process(pat2X, pat2Y, pat2Z)
 	begin
 		pat2_dis_x <= pat2X * 640 / patXRange;
 		pat2_dis_y <= pat2Y * 480 / patYRange;
-		pat2_radius <= (patZRange - pat2Z) / 10 + 8;
+		pat2_radius <= (patZRange - pat2Z) / 10 + 18;
 	end process;
 
 	----------------------- 处理x方向 ------------------------------
@@ -178,9 +178,8 @@ begin
 		if (clk'event and clk='1') then
 			-- 读背景图片
 			if (vector_x >= 0 and vector_x < 640 and vector_y >= 0 and vector_y < 480) then
-				sram_addr <= std_logic_vector(to_unsigned(vector_x * 640 + vector_y, sram_addr'length));
+				sram_addr <= std_logic_vector(to_unsigned(vector_x * 480 + vector_y, sram_addr'length));
 			end if;
-			--sram_addr <= "0001001010101110001";
 			
 			-- 读球图片
 			if (vector_x >= (ball_dis_x - ball_radius) and vector_x < (ball_dis_x + ball_radius) and
