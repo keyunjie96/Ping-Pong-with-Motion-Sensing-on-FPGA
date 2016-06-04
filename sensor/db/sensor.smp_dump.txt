@@ -1,0 +1,7 @@
+
+State Machine - |sensor|read_state
+Name read_state.check_sum read_state.reading read_state.data read_state.head 
+read_state.head 0 0 0 0 
+read_state.data 0 0 1 1 
+read_state.reading 0 1 0 1 
+read_state.check_sum 1 0 0 1 

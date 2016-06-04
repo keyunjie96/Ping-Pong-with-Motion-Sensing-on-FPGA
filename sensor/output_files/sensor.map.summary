@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Mon May 30 16:37:45 2016
+Quartus II 64-Bit Version : 13.0.1 Build 232 06/12/2013 SP 1 SJ Full Version
+Revision Name : sensor
+Top-level Entity Name : sensor
+Family : Cyclone II
+Total logic elements : 491
+    Total combinational functions : 409
+    Dedicated logic registers : 131
+Total registers : 131
+Total pins : 55
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0

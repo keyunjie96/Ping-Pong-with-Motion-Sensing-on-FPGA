@@ -1,0 +1,54 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
+
+entity sensor is
+	port(
+		clk : in std_logic; --24MHz时钟
+		rst : in std_logic; --低电平复位信号
+		rx : in std_logic; --串口rx端读入
+		dbg : out std_logic_vector(7 downto 0)
+		);
+end entity;
+
+architecture bev of sensor is
+
+type r_s is (head, data, s1, s2, s3, s4, s5, s6, s7, s8, sum);
+--uart
+component uart is
+	port(
+		clk : in std_logic; --24MHz时钟
+		rst : in std_logic;
+		rx : in std_logic;
+		rd : out std_logic_vector(7 downto 0);
+		data_valid : out std_logic
+		);
+end component;
+signal data_valid : in std_logic;
+signal rd : std_logic_vector(7 downto 0);
+
+begin
+	uart : uart port map(
+		clk => clk;
+		rst => rst;
+		rx => rx;
+		data_valid => data_valid;
+		rd => rd
+		);
+
+process(clk, rx) is
+	if rst = '0' then
+		state <= head;
+		dbg <= x"01";
+	elsif rising_edge(clk) then
+		if data_valid = '1' then
+			dbg <= rd;
+		end if;
+		--case r_s is
+		--	when head =>
+
+		--end case;
+	end if;
+
+end architecture;
