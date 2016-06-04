@@ -63,6 +63,7 @@ type point_states is (idle, Ago, Bgo, finish);
 signal point_s : point_states := idle;
 
 signal server: bit; -- 发球方
+signal s1, s2: integer range 0 to 9;
 
 signal x: integer range 0 to ballXRange;
 signal y: integer range 0 to ballYRange;
@@ -91,38 +92,33 @@ begin
 	pat2Y <= p2y;
 	pat2Z <= p2z;
 	
------------- 游戏开始，复位 --------------
-	process(start)
+	process(start, z, p1z, p2z, clk)
 	begin
-		if (rising_edge(start)) then
-			score1 <= 0;
-			score2 <= 0;
+		-- 游戏开始，复位
+		if (start = '1') then
+			s1 <= 0;
+			s2 <= 0;
 			point_s <= idle;
+		elsif rising_edge(clk) then
+		-- 判断得分 
+			if point_s = Ago then
+				if (z > ballZRange - 5) then -- 球与拍子未接触
+					s1 <= s1 + 1;
+					point_s <= finish;
+				else
+					point_s <= idle;
+				end if;
+			elsif point_s = Bgo then
+				if (z < 5) then -- 球与拍子未接触
+					s2 <= s2 + 1;
+					point_s <= finish;
+				else
+					point_s <= idle;
+				end if;
+			end if;
 		end if;
 	end process;
-
--------------- 判断得分 -----------------
---	process(ballX, ballY, ballZ, pat1X, pat1Y, pat1Z, pat2X, pat2Y, pat2Z)
---	begin
---		if point_s = Ago then
---			if (ballZ > ballZRange - pat2Z) then
---				if () -- 球与拍子不接触
---					score1 <= score1 + 1;
---					point_s <= finish;
---				else
---					point_s <= idle;
---				end if;
---			end if;
---		elsif point_s = Bgo then
---			if (ballZ < pat1Z) then
---				if () -- 球与拍子不接触
---					score2 <= score2 + 1;
---					point_s <= finish;
---				else
---					point_s <= idle;
---				end if;
---			end if;
---		end if;
---	end process;
+	score1 <= s1;
+	score2 <= s2;
 
 end architecture;

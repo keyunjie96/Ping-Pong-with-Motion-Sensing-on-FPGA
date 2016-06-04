@@ -101,7 +101,7 @@ procedure calcBallPos(signal x: in integer range 0 to ballXRange;
 begin
 	--xp <= ballXRange / 2 + (ballZRange + 2 * (ballZRange - z) / 3) * (ballXRange / 2 - x * 320 / ballXRange) / ballXRange;
 	xp <= x * 320 / ballXRange;
-	yp <= y * 300 / ballYRange - 50 + (ballZRange - z) * 3 / 2;
+	yp <= (ballYRange - y) * 140 / ballYRange - 50 + (ballZRange - z);
 	r <= (ballZRange - z) / 8 + 7;
 end procedure;
 
@@ -114,7 +114,7 @@ procedure calcPatPos(signal x: in integer range 0 to patXRange;
 begin
 	--xp <= ballXRange / 2 + (ballZRange + 2 * (ballZRange - z) / 3) * (ballXRange / 2 - x * 320 / ballXRange) / ballXRange;
 	xp <= x * 320 / patXRange;
-	yp <= y * 300 / patYRange - 150 + (ballZRange - z) * 2;
+	yp <= (patYRange - y) * 140 / patYRange - 150 + (ballZRange - z);
 	r <= (ballZRange - z) / 4 + 20;
 end procedure;
 
@@ -337,20 +337,20 @@ begin
 					b1 <= score_data(2 downto 0);
 				else
 					-- 这一段的显示逻辑比较迷，我在报告里整理了一份详细的
-					if not (lpat1_data = "000000000") then
+					if vector_x < 320 and not (lpat1_data = "000000000") then
 						r1 <= lpat1_data(8 downto 6);
 						g1 <= lpat1_data(5 downto 3);
 						b1 <= lpat1_data(2 downto 0);
-					elsif not (rpat1_data = "000000000") then
-						r1 <= rpat1_data(8 downto 6);
-						g1 <= rpat1_data(5 downto 3);
-						b1 <= rpat1_data(2 downto 0);
+					elsif vector_x > 320 and not (rpat2_data = "000000000") then
+						r1 <= rpat2_data(8 downto 6);
+						g1 <= rpat2_data(5 downto 3);
+						b1 <= rpat2_data(2 downto 0);
 					-- 考虑球被中间挡板遮挡的问题：
 					-- 1. 左侧：球的Z在ballZRange/2~ballZRange区间，强行将挡板覆盖在上面，否则覆盖在下面
 					-- 2. 右侧：球的Z在0~ballZRange/2区间，强行覆盖上面，否则覆盖下面
 					elsif (vector_x >= 22 and vector_x < 300 and vector_y >= 253 and vector_y < 275) then
 						if (ballZ < ballZRange / 2) then
-							if (not lball_data = "000000000") then
+							if (vector_x < 320 and not lball_data = "000000000") then
 								r1 <= lball_data(8 downto 6);
 								g1 <= lball_data(5 downto 3);
 								b1 <= lball_data(2 downto 0);
@@ -370,7 +370,7 @@ begin
 							g1 <= "010";
 							b1 <= "010";
 						else
-							if (not rball_data = "000000000") then
+							if (vector_x > 320 and not rball_data = "000000000") then
 								r1 <= rball_data(8 downto 6);
 								g1 <= rball_data(5 downto 3);
 								b1 <= rball_data(2 downto 0);
@@ -380,22 +380,22 @@ begin
 								b1 <= "010";
 							end if;
 						end if;
-					elsif not (rball_data = "000000000") then
+					elsif vector_x > 320 and not (rball_data = "000000000") then
 						r1 <= rball_data(8 downto 6);
 						g1 <= rball_data(5 downto 3);
 						b1 <= rball_data(2 downto 0);
-					elsif not (lball_data = "000000000") then
+					elsif vector_x < 320 and not (lball_data = "000000000") then
 						r1 <= lball_data(8 downto 6);
 						g1 <= lball_data(5 downto 3);
 						b1 <= lball_data(2 downto 0);
-					elsif not (lpat2_data = "000000000") then
+					elsif vector_x < 320 and not (lpat2_data = "000000000") then
 						r1 <= lpat2_data(8 downto 6);
 						g1 <= lpat2_data(5 downto 3);
 						b1 <= lpat2_data(2 downto 0);
-					elsif not (rpat2_data = "000000000") then
-						r1 <= rpat2_data(8 downto 6);
-						g1 <= rpat2_data(5 downto 3);
-						b1 <= rpat2_data(2 downto 0);
+					elsif vector_x > 320 and not (rpat1_data = "000000000") then
+						r1 <= rpat1_data(8 downto 6);
+						g1 <= rpat1_data(5 downto 3);
+						b1 <= rpat1_data(2 downto 0);
 					else
 						r1 <= sram_data(8 downto 6);
 						g1 <= sram_data(5 downto 3);

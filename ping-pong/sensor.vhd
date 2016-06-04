@@ -9,7 +9,8 @@ port(
 	rst 	: in std_logic; --低电平复位
 	rx 	: in std_logic; --数据读取，接连uart tx接口
 	x, y, z : out integer;
-	is_hit : out std_logic
+	is_hit : out std_logic;
+	pat_v : out integer range 0 to 20
 );
 end entity;
 
@@ -126,8 +127,16 @@ begin
 									ax_h <= (conv_integer(signed(data_buffer(15 downto 8)))*256 + conv_integer(data_buffer(7 downto 0))) / 209;
 									ay_h <= (conv_integer(signed(data_buffer(31 downto 24)))*256 + conv_integer(data_buffer(23 downto 16))) / 209;	
 									az_h <= (conv_integer(signed(data_buffer(47 downto 40)))*256 + conv_integer(data_buffer(39 downto 32))) / 209;	
-									if (ax_h < -10 or  ay_h > 10) then is_hit <= '1';
-									else is_hit <= '0';
+									if (ax_h < -10 or ax_h > 10) then 
+										is_hit <= '1';
+										if(ax_h < -20 or ax_h > 20) then
+											pat_v <= 20;
+										else
+											pat_v <= (abs(ax_h)-10)/2 + 10;
+										end if;
+									else 
+										is_hit <= '0';
+										pat_v <= 8;
 									end if;
 								read_acc <= '1';
 								--ay <= ()
