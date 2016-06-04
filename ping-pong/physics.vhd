@@ -38,6 +38,14 @@ begin
 			ballX <= ballXRange / 2;
 			ballY <= ballYRange / 3;
 			ballZ <= ballZRange / 5;
+			
+			pat1X <= 140;
+			pat1Y <= 90;
+			pat1Z <= 20;
+			
+			pat2X <= 140;
+			pat2Y <= 90;
+			pat2Z <= 20;
 		end if;
 	end process;
 

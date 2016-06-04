@@ -53,6 +53,12 @@ port(
 	pat2Z: out integer range 0 to patZRange);
 end component;
 
+-- 每一球的各个状态
+type point_states is (idle, Ago, Bgo, finish);
+signal point_s : point_states := idle;
+
+signal server: bit; -- 发球方
+
 signal x: integer range 0 to ballXRange;
 signal y: integer range 0 to ballYRange;
 signal z: integer range 0 to ballZRange;
@@ -69,7 +75,7 @@ begin
 		ballXRange, ballYRange, ballZRange,
 		patXRange, patYRange, patZRange)
 			port map(rst, clk, x, y, z, 
-		p1x, p1y, p1z, p2z, p2y, p2z);
+		p1x, p1y, p1z, p2x, p2y, p2z);
 
 	ballX <= x;
 	ballY <= y;
@@ -87,11 +93,32 @@ begin
 		if (rising_edge(start)) then
 			score1 <= 0;
 			score2 <= 0;
+			point_s <= idle;
 		end if;
 	end process;
 
 -------------- 判断得分 -----------------
-
-------------- 判断游戏结束 ---------------
+--	process(ballX, ballY, ballZ, pat1X, pat1Y, pat1Z, pat2X, pat2Y, pat2Z)
+--	begin
+--		if point_s = Ago then
+--			if (ballZ > ballZRange - pat2Z) then
+--				if () -- 球与拍子不接触
+--					score1 <= score1 + 1;
+--					point_s <= finish;
+--				else
+--					point_s <= idle;
+--				end if;
+--			end if;
+--		elsif point_s = Bgo then
+--			if (ballZ < pat1Z) then
+--				if () -- 球与拍子不接触
+--					score2 <= score2 + 1;
+--					point_s <= finish;
+--				else
+--					point_s <= idle;
+--				end if;
+--			end if;
+--		end if;
+--	end process;
 
 end architecture;

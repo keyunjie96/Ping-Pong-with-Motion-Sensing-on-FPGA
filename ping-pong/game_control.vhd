@@ -8,7 +8,7 @@ port(
 	rst, clk1, clk2: in std_logic;
 	key_in: in std_logic_vector(2 downto 0);
 	sensor_in: in std_logic;
-	sram_data: in std_logic_vector(8 downto 0);
+	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vga_hs, vga_vs: out std_logic;
 	vga_r, vga_g, vga_b: out std_logic_vector(2 downto 0));
@@ -38,7 +38,7 @@ port(
 	pat2Y: in integer range 0 to patYRange;
 	pat2Z: in integer range 0 to patZRange;
 	
-	sram_data: in std_logic_vector(8 downto 0);
+	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vs, hs: out std_logic;
 	r, g, b: out std_logic_vector(2 downto 0));
@@ -113,7 +113,7 @@ begin
 		ballX, ballY, ballZ,
 		pat1X, pat1Y, pat1Z,
 		pat2X, pat2Y, pat2Z);
-	
+		
 ------------------  分频  ---------------------
 	process(clk1)
 	begin
@@ -121,11 +121,14 @@ begin
 			clk50 <= not clk50;
 		end if;
 	end process;
-
+	
 ----------------- 解析键盘输入 ------------------
-	process(key_in)
+	process(rst, key_in)
 	begin
-		if (scene = '0') then
+		if rst = '0' then
+			start <= '0';
+			scene <= '0';
+		elsif (scene = '0') then
 		-- 处理回车键
 			if key_in = "100" then
 				start <= '1';

@@ -38,7 +38,7 @@ u0: Keyboard port map(datain,clkin,fclk,rst,scancode);
 process(scancode)
 begin
 	case scancode(7 downto 0) is
-	-- TODO: 处理上下键、回车键和ESC键
+	-- TODO: 处理回车键和ESC键
 		when "01011010" => oper <= "100";  -- enter
 		when "01110110" => oper <= "111";  -- esc
 		when others => oper <="000";
