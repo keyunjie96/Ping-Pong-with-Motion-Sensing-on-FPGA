@@ -129,16 +129,16 @@ begin
 			ball_ang <= 35;
 			cnt <= 0;
 			rotate_cw <= '1';
-			ball_v <= 12;
+			ball_v <= 8;
 		elsif rising_edge(clk) then
 			cnt <= cnt + 1;
 			case ball_state is
 			--------------球等待开始---------------
 				when waiting =>
 					if pat1_hit = '1' and ball_X > 0 and ball_X < ballXRange then
-							ball_state <= flying;
+							ball_state <= pat1Range;
 							catch_state <= pat2;
-					elsif cnt mod 2500000  = 0 then
+					elsif cnt mod 5000000  = 0 then
 						if (rotate_cw = '1') then
 							ball_ang <= ball_ang - 5;
 							if (ball_ang < 35) then
@@ -156,13 +156,17 @@ begin
 				when others =>
 					if cnt mod 10000000 = 0 then
 					--------------球超出上下边界，游戏结束，回归等待---------------
-						if ((ball_z < 0 or ball_Z > ballZRange) and ball_state /= waiting) then
+						if ((ball_z < 30 or ball_Z > ballZRange - 30) and ball_state /= waiting) then
 							ball_state <= waiting;
 						--------------球超出左右边界---------------
-						elsif ((ball_X < 0)  and ball_state /= left_border) then
-							ball_ang <= - ball_ang;
+						elsif ((ball_X < 30)  and ball_state /= left_border) then
+							if ball_ang > 0 then
+								ball_ang <= 180 - ball_ang;
+							else
+								ball_ang <= -180 - ball_ang;
+							end if;
 							ball_state <= left_border;
-						elsif ((ball_X > ballXRange) and ball_state /= right_border) then
+						elsif ((ball_X > ballXRange - 30) and ball_state /= right_border) then
 							if ball_ang > 0 then
 								ball_ang <= 180 - ball_ang;
 							else
@@ -171,16 +175,12 @@ begin
 							ball_state <= right_border;
 						--------------球被拍接住---------------
 						--elsif ((ball_Z < 20 and ball_X > pat1_X - 10 and ball_X < pat1_X + 10) and ball_state /= pat1Range and catch_state = pat1) then
-						elsif ball_Z < 20 and ball_state /= pat1Range and catch_state = pat1 then 
-							if ball_ang > 0 then
-								ball_ang <= 180 - ball_ang;
-							else
-								ball_ang <= -180 - ball_ang;
-							end if;
+						elsif ball_Z < 50 and ball_state /= pat1Range then --and catch_state = pat1 then 
+							ball_ang <= -ball_ang;
 							ball_state <= pat1Range;
 							catch_state <= pat2;
 						--elsif ((ball_Z > ballZRange - 20 and ball_X > pat2_X - 10 and ball_X < pat2_X + 10) and ball_state /= pat2Range and catch_state = pat2) then
-						elsif ball_Z > ballZRange - 20 and ball_state /= pat2Range and catch_state = pat2 then
+						elsif ball_Z > ballZRange - 50 and ball_state /= pat2Range then --and catch_state = pat2 then
 							ball_ang <= -ball_ang;
 							ball_state <= pat2Range;
 							catch_state <= pat1;
