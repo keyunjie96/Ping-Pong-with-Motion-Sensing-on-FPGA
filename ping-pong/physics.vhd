@@ -30,7 +30,7 @@ end entity;
 
 architecture behav of physics is
 signal cnt : integer range 0 to 100000000;
--- 这里需要一些signal 处理球、球拍各自的位置、速度、加速度（maybe球拍只需要加速度？计算动量？）
+
 signal ball_ang : integer range -180 to 180; signal sinx, cosx : integer range -1000 to 1000;
 signal ball_X: integer range 0 to ballXRange;
 signal ball_Y: integer range 0 to ballYRange;
@@ -95,9 +95,9 @@ begin
 	process(rst, clk)
 	begin
 		if (rst = '0') then
-			ballX <= ballXRange / 2;
-			ballY <= ballYRange / 3;
-			ballZ <= ballZRange / 5;
+--			ballX <= ballXRange / 2;
+--			ballY <= ballYRange / 3;
+--			ballZ <= ballZRange / 5;
 			
 			pat1X <= 140;
 			pat1Y <= 90;

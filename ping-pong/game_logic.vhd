@@ -80,7 +80,7 @@ begin
 		ballXRange, ballYRange, ballZRange,
 		patXRange, patYRange, patZRange)
 			port map(rst, clk, sensor_in_1, sensor_in_2, start_clk, x, y, z, 
-		p1x, p1y, p1z, p2z, p2y, p2z);
+		p1x, p1y, p1z, p2x, p2y, p2z);
 	ballX <= x;
 	ballY <= y;
 	ballZ <= z;
