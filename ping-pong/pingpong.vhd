@@ -8,7 +8,7 @@ port(
 	------------------------    Clock Input        ------------------------
 	clk1: in std_logic;	-- 100M
 	clk2: in std_logic;  -- 24M
-	
+	start_clk : in std_logic;
 	------------------------    reset      --------------------------------
 	rst: in std_logic;
 	
@@ -17,8 +17,8 @@ port(
 	ps2clk: in std_logic;
 	
 	------------------------   Sensor    ----------------------------------
-	sensor_in: in std_logic;
-	
+	sensor_in_1: in std_logic;
+	sensor_in_2: in std_logic;
 	--------------------------  SRAM    -----------------------------------
 	sram_data: inout std_logic_vector(31 downto 0);
 	sram_addr: out std_logic_vector(20 downto 0);
@@ -48,7 +48,9 @@ component game_control is
 port(
 	rst, clk1, clk2: in std_logic;
 	key_in: in std_logic_vector(2 downto 0);
-	sensor_in: in std_logic;
+	sensor_in_1: in std_logic;
+	sensor_in_2: in std_logic;
+	start_clk : in std_logic;
 	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vga_hs, vga_vs: out std_logic;
@@ -103,7 +105,9 @@ begin
 		rst => rst,
 		clk1 => clk1,
 		clk2 => clk2,
-		sensor_in => sensor_in,
+		sensor_in_1 => sensor_in_1,
+		sensor_in_2 => sensor_in_2,
+		start_clk => start_clk,
 		key_in => keyboard_oper,
 		sram_data => sram_data_temp,
 		sram_addr => sram_addr_temp,

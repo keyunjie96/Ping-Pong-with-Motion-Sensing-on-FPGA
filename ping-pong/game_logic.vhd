@@ -17,7 +17,9 @@ port(
 	rst, clk: in std_logic;
 	start: in std_logic; -- 游戏开始的信号
 	score1, score2: out integer range 0 to 15;
-	sensor_in: in std_logic;
+	sensor_in_1: in std_logic;
+	sensor_in_2: in std_logic;
+	start_clk : in std_logic;
 	ballX: out integer range 0 to ballXRange;
 	ballY: out integer range 0 to ballYRange;
 	ballZ: out integer range 0 to ballZRange;
@@ -42,6 +44,9 @@ generic(
 	patZRange: integer := 110);
 port(
 	rst, clk: in std_logic;
+	rx1: in std_logic;
+	rx2: in std_logic;
+	start_clk: in std_logic;
 	ballX: out integer range 0 to ballXRange;
 	ballY: out integer range 0 to ballYRange;
 	ballZ: out integer range 0 to ballZRange;
@@ -74,9 +79,8 @@ begin
 	physics_logic: physics generic map(
 		ballXRange, ballYRange, ballZRange,
 		patXRange, patYRange, patZRange)
-			port map(rst, clk, x, y, z, 
-		p1x, p1y, p1z, p2x, p2y, p2z);
-
+			port map(rst, clk, sensor_in_1, sensor_in_2, start_clk, x, y, z, 
+		p1x, p1y, p1z, p2z, p2y, p2z);
 	ballX <= x;
 	ballY <= y;
 	ballZ <= z;

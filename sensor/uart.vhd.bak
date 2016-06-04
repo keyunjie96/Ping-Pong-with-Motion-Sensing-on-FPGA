@@ -1,0 +1,49 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
+
+entity uart is
+	port(
+		clk : in std_logic; --24MHz时钟
+		rst : in std_logic;
+		rx : in std_logic;
+		rd : out std_logic_vector(7 downto 0);
+		data_valid : out std_logic
+		);
+end entity;
+
+architecture bev of uart is
+signal cnt : integer range 0 to 2499 := 0;--分频技术，24MHz时钟采用2500分频后为9600波特率
+--signal start : std_logic;
+begin
+process(clk, rst) is
+	if rst = '0' then
+		data_valid = '0';
+	elsif rising_edge(clk) then
+		cnt <= cnt + 1;
+	end if;
+end process;
+
+process(cnt)
+signal pointer : integer range -1 to 8:= 8;
+begin
+	if cnt = 2499 then
+	case cnt is 
+		when 8 =>
+			if rx = '0' then
+				cnt = cnt - 1;
+			end if;
+		when -1 =>
+			if rx = '1' then
+				data_valid = '1';
+			else then
+				data_valid = '0';
+			end if;
+			cnt = -1;
+		when others => -- 7 down to 0, valid data
+			rd(pointer) = rx;
+			cnt = cnt - 1;
+	end case;
+	end if;
+end architecture;

@@ -1,0 +1,621 @@
+Analysis & Synthesis report for sensor
+Mon May 30 16:37:45 2016
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Analysis & Synthesis IP Cores Summary
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Source assignments for sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated
+ 14. Parameter Settings for User Entity Instance: sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component
+ 15. Parameter Settings for Inferred Entity Instance: lpm_divide:Div0
+ 16. altsyncram Parameter Settings by Entity Instance
+ 17. Port Connectivity Checks: "sin_cos_rom:sensor_sin_cos"
+ 18. Elapsed Time Per Partition
+ 19. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++---------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                          ;
++------------------------------------+--------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Mon May 30 16:37:45 2016            ;
+; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Full Version ;
+; Revision Name                      ; sensor                                           ;
+; Top-level Entity Name              ; sensor                                           ;
+; Family                             ; Cyclone II                                       ;
+; Total logic elements               ; 491                                              ;
+;     Total combinational functions  ; 409                                              ;
+;     Dedicated logic registers      ; 131                                              ;
+; Total registers                    ; 131                                              ;
+; Total pins                         ; 55                                               ;
+; Total virtual pins                 ; 0                                                ;
+; Total memory bits                  ; 0                                                ;
+; Embedded Multiplier 9-bit elements ; 0                                                ;
+; Total PLLs                         ; 0                                                ;
++------------------------------------+--------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP2C20Q240C8       ;                    ;
+; Top-level entity name                                                      ; sensor             ; sensor             ;
+; Family name                                                                ; Cyclone II         ; Cyclone IV GX      ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; Off                ; Off                ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processors 2-4         ;   0.0%      ;
++----------------------------+-------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                   ;
++----------------------------------+-----------------+----------------------------------------+----------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                              ; File Name with Absolute Path                                                     ; Library ;
++----------------------------------+-----------------+----------------------------------------+----------------------------------------------------------------------------------+---------+
+; sensor.vhd                       ; yes             ; User VHDL File                         ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/sensor.vhd                 ;         ;
+; uart.vhd                         ; yes             ; Auto-Found VHDL File                   ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/uart.vhd                   ;         ;
+; sin_cos_rom.vhd                  ; yes             ; Auto-Found Wizard-Generated File       ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/sin_cos_rom.vhd            ;         ;
+; altsyncram.tdf                   ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altsyncram.tdf                 ;         ;
+; stratix_ram_block.inc            ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/stratix_ram_block.inc          ;         ;
+; lpm_mux.inc                      ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/lpm_mux.inc                    ;         ;
+; lpm_decode.inc                   ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/lpm_decode.inc                 ;         ;
+; aglobal130.inc                   ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/aglobal130.inc                 ;         ;
+; a_rdenreg.inc                    ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/a_rdenreg.inc                  ;         ;
+; altrom.inc                       ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altrom.inc                     ;         ;
+; altram.inc                       ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altram.inc                     ;         ;
+; altdpram.inc                     ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/altdpram.inc                   ;         ;
+; db/altsyncram_em71.tdf           ; yes             ; Auto-Generated Megafunction            ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/db/altsyncram_em71.tdf     ;         ;
+; sin_cos_bin.mif                  ; yes             ; Auto-Found Memory Initialization File  ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/sin_cos_bin.mif            ;         ;
+; lpm_divide.tdf                   ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/lpm_divide.tdf                 ;         ;
+; abs_divider.inc                  ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/abs_divider.inc                ;         ;
+; sign_div_unsign.inc              ; yes             ; Megafunction                           ; c:/altera/13.0sp1/quartus/libraries/megafunctions/sign_div_unsign.inc            ;         ;
+; db/lpm_divide_lem.tdf            ; yes             ; Auto-Generated Megafunction            ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/db/lpm_divide_lem.tdf      ;         ;
+; db/sign_div_unsign_vlh.tdf       ; yes             ; Auto-Generated Megafunction            ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/db/sign_div_unsign_vlh.tdf ;         ;
+; db/alt_u_div_03f.tdf             ; yes             ; Auto-Generated Megafunction            ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/db/alt_u_div_03f.tdf       ;         ;
+; db/add_sub_lkc.tdf               ; yes             ; Auto-Generated Megafunction            ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/db/add_sub_lkc.tdf         ;         ;
+; db/add_sub_mkc.tdf               ; yes             ; Auto-Generated Megafunction            ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/db/add_sub_mkc.tdf         ;         ;
++----------------------------------+-----------------+----------------------------------------+----------------------------------------------------------------------------------+---------+
+
+
++-------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                             ;
++---------------------------------------------+---------------------------+
+; Resource                                    ; Usage                     ;
++---------------------------------------------+---------------------------+
+; Estimated Total logic elements              ; 491                       ;
+;                                             ;                           ;
+; Total combinational functions               ; 409                       ;
+; Logic element usage by number of LUT inputs ;                           ;
+;     -- 4 input functions                    ; 106                       ;
+;     -- 3 input functions                    ; 145                       ;
+;     -- <=2 input functions                  ; 158                       ;
+;                                             ;                           ;
+; Logic elements by mode                      ;                           ;
+;     -- normal mode                          ; 250                       ;
+;     -- arithmetic mode                      ; 159                       ;
+;                                             ;                           ;
+; Total registers                             ; 131                       ;
+;     -- Dedicated logic registers            ; 131                       ;
+;     -- I/O registers                        ; 0                         ;
+;                                             ;                           ;
+; I/O pins                                    ; 55                        ;
+; Embedded Multiplier 9-bit elements          ; 0                         ;
+; Maximum fan-out node                        ; uart:sensor_uart|rx_check ;
+; Maximum fan-out                             ; 119                       ;
+; Total fan-out                               ; 1549                      ;
+; Average fan-out                             ; 2.60                      ;
++---------------------------------------------+---------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                         ;
++----------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node             ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                     ; Library Name ;
++----------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------------------------------------------------------------+--------------+
+; |sensor                                ; 409 (143)         ; 131 (96)     ; 0           ; 0            ; 0       ; 0         ; 55   ; 0            ; |sensor                                                                                                 ; work         ;
+;    |lpm_divide:Div0|                   ; 208 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sensor|lpm_divide:Div0                                                                                 ; work         ;
+;       |lpm_divide_lem:auto_generated|  ; 208 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sensor|lpm_divide:Div0|lpm_divide_lem:auto_generated                                                   ; work         ;
+;          |sign_div_unsign_vlh:divider| ; 208 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sensor|lpm_divide:Div0|lpm_divide_lem:auto_generated|sign_div_unsign_vlh:divider                       ; work         ;
+;             |alt_u_div_03f:divider|    ; 208 (208)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sensor|lpm_divide:Div0|lpm_divide_lem:auto_generated|sign_div_unsign_vlh:divider|alt_u_div_03f:divider ; work         ;
+;    |uart:sensor_uart|                  ; 58 (58)           ; 35 (35)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sensor|uart:sensor_uart                                                                                ; work         ;
++----------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------------------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis IP Cores Summary                                                                                                                                      ;
++--------+--------------+---------+--------------+--------------+------------------------------------+-----------------------------------------------------------------------+
+; Vendor ; IP Core Name ; Version ; Release Date ; License Type ; Entity Instance                    ; IP Include File                                                       ;
++--------+--------------+---------+--------------+--------------+------------------------------------+-----------------------------------------------------------------------+
+; Altera ; ROM: 1-PORT  ; N/A     ; N/A          ; N/A          ; |sensor|sin_cos_rom:sensor_sin_cos ; C:/Users/keyun/Documents/GitHub/ping-pong-vhdl/sensor/sin_cos_rom.vhd ;
++--------+--------------+---------+--------------+--------------+------------------------------------+-----------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++----------------------------------------+----------------------------------------+
+; Register name                          ; Reason for Removal                     ;
++----------------------------------------+----------------------------------------+
+; angx[0..31]                            ; Lost fanout                            ;
+; angy[0..31]                            ; Lost fanout                            ;
+; dbg2[7]~reg0                           ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 65 ;                                        ;
++----------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 131   ;
+; Number of registers using Synchronous Clear  ; 3     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 22    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 101   ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; uart:sensor_uart|pointer[4]            ; 9       ;
+; uart:sensor_uart|pointer[2]            ; 12      ;
+; uart:sensor_uart|pointer[1]            ; 12      ;
+; uart:sensor_uart|pointer[0]            ; 13      ;
+; uart:sensor_uart|pointer[3]            ; 5       ;
+; Total number of inverted registers = 5 ;         ;
++----------------------------------------+---------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output          ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------+
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |sensor|uart:sensor_uart|rd[1]      ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |sensor|cnt[3]                      ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |sensor|data_buffer[64]             ;
+; 33:1               ; 5 bits    ; 110 LEs       ; 10 LEs               ; 100 LEs                ; Yes        ; |sensor|uart:sensor_uart|pointer[3] ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------+
+; Source assignments for sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated ;
++---------------------------------+--------------------+------+----------------------------------------------------+
+; Assignment                      ; Value              ; From ; To                                                 ;
++---------------------------------+--------------------+------+----------------------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                                  ;
++---------------------------------+--------------------+------+----------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component ;
++------------------------------------+----------------------+---------------------------------------------+
+; Parameter Name                     ; Value                ; Type                                        ;
++------------------------------------+----------------------+---------------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                                     ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                                  ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                                ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                                ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                              ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                                     ;
+; OPERATION_MODE                     ; ROM                  ; Untyped                                     ;
+; WIDTH_A                            ; 12                   ; Signed Integer                              ;
+; WIDTHAD_A                          ; 10                   ; Signed Integer                              ;
+; NUMWORDS_A                         ; 722                  ; Signed Integer                              ;
+; OUTDATA_REG_A                      ; CLOCK0               ; Untyped                                     ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                                     ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                                     ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                                     ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                                     ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                                     ;
+; WIDTH_B                            ; 1                    ; Untyped                                     ;
+; WIDTHAD_B                          ; 1                    ; Untyped                                     ;
+; NUMWORDS_B                         ; 1                    ; Untyped                                     ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                                     ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                                     ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                                     ;
+; ADDRESS_REG_B                      ; CLOCK1               ; Untyped                                     ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                                     ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                                     ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                                     ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                                     ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                                     ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                                     ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                                     ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                                     ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Signed Integer                              ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                                     ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                                     ;
+; BYTE_SIZE                          ; 8                    ; Untyped                                     ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE            ; Untyped                                     ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                                     ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                                     ;
+; INIT_FILE                          ; sin_cos_bin.mif      ; Untyped                                     ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                                     ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                                     ;
+; CLOCK_ENABLE_INPUT_A               ; BYPASS               ; Untyped                                     ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                                     ;
+; CLOCK_ENABLE_OUTPUT_A              ; BYPASS               ; Untyped                                     ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                                     ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                                     ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                                     ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                                     ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                                     ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                                     ;
+; DEVICE_FAMILY                      ; Cyclone II           ; Untyped                                     ;
+; CBXI_PARAMETER                     ; altsyncram_em71      ; Untyped                                     ;
++------------------------------------+----------------------+---------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_divide:Div0 ;
++------------------------+----------------+------------------------+
+; Parameter Name         ; Value          ; Type                   ;
++------------------------+----------------+------------------------+
+; LPM_WIDTHN             ; 17             ; Untyped                ;
+; LPM_WIDTHD             ; 8              ; Untyped                ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_PIPELINE           ; 0              ; Untyped                ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                ;
+; CBXI_PARAMETER         ; lpm_divide_lem ; Untyped                ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY             ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY           ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE           ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE         ;
++------------------------+----------------+------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------+
+; altsyncram Parameter Settings by Entity Instance                                                       ;
++-------------------------------------------+------------------------------------------------------------+
+; Name                                      ; Value                                                      ;
++-------------------------------------------+------------------------------------------------------------+
+; Number of entity instances                ; 1                                                          ;
+; Entity Instance                           ; sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component ;
+;     -- OPERATION_MODE                     ; ROM                                                        ;
+;     -- WIDTH_A                            ; 12                                                         ;
+;     -- NUMWORDS_A                         ; 722                                                        ;
+;     -- OUTDATA_REG_A                      ; CLOCK0                                                     ;
+;     -- WIDTH_B                            ; 1                                                          ;
+;     -- NUMWORDS_B                         ; 1                                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK1                                                     ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                               ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                                       ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE                                                  ;
++-------------------------------------------+------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "sin_cos_rom:sensor_sin_cos"                                                         ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; q    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Analysis & Synthesis
+    Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
+    Info: Processing started: Mon May 30 16:37:43 2016
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off sensor -c sensor
+Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
+Warning (12019): Can't analyze file -- file adxl345.vhd is missing
+Info (12021): Found 2 design units, including 1 entities, in source file sensor.vhd
+    Info (12022): Found design unit 1: sensor-bev
+    Info (12023): Found entity 1: sensor
+Info (12127): Elaborating entity "sensor" for the top level hierarchy
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(11): used implicit default value for signal "x" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(11): used implicit default value for signal "y" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(11): used implicit default value for signal "z" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10036): Verilog HDL or VHDL warning at sensor.vhd(34): object "angz" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at sensor.vhd(36): object "read_ang" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at sensor.vhd(36): object "read_acc" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at sensor.vhd(50): object "ax" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at sensor.vhd(50): object "ay" assigned a value but never read
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(55): used implicit default value for signal "compute_state" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(57): used implicit default value for signal "siny" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(57): used implicit default value for signal "cosy" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(57): used implicit default value for signal "sinz" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10541): VHDL Signal Declaration warning at sensor.vhd(57): used implicit default value for signal "cosz" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations.
+Warning (10492): VHDL Process Statement warning at sensor.vhd(78): signal "cnt" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(86): signal "uart_clk" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(157): signal "cnt" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(163): signal "compute_state" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(165): signal "cnt_c" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(167): signal "angx" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(168): signal "cnt_c" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(170): signal "sin_cos_value" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(171): signal "sin_cos_value" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(172): signal "sinx" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(174): signal "cnt_c" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(176): signal "angx" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(177): signal "cnt_c" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(179): signal "sin_cos_value" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(180): signal "sin_cos_value" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(181): signal "sinx" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(183): signal "cnt_c" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(185): signal "angy" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at sensor.vhd(186): signal "cnt_c" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10631): VHDL Process Statement warning at sensor.vhd(155): inferring latch(es) for signal or variable "sin_cos_address", which holds its previous value in one or more paths through the process
+Warning (10631): VHDL Process Statement warning at sensor.vhd(155): inferring latch(es) for signal or variable "cnt_c", which holds its previous value in one or more paths through the process
+Warning (10631): VHDL Process Statement warning at sensor.vhd(155): inferring latch(es) for signal or variable "sinx", which holds its previous value in one or more paths through the process
+Warning (10631): VHDL Process Statement warning at sensor.vhd(155): inferring latch(es) for signal or variable "cosx", which holds its previous value in one or more paths through the process
+Info (10041): Inferred latch for "cnt_c[0]" at sensor.vhd(155)
+Info (10041): Inferred latch for "cnt_c[1]" at sensor.vhd(155)
+Info (10041): Inferred latch for "cnt_c[2]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[0]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[1]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[2]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[3]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[4]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[5]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[6]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[7]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[8]" at sensor.vhd(155)
+Info (10041): Inferred latch for "sin_cos_address[9]" at sensor.vhd(155)
+Info (10018): Can't recognize finite state machine "read_state" because it has a complex reset state
+Warning (12125): Using design file uart.vhd, which is not specified as a design file for the current project, but contains definitions for 2 design units and 1 entities in project
+    Info (12022): Found design unit 1: uart-bev
+    Info (12023): Found entity 1: uart
+Info (12128): Elaborating entity "uart" for hierarchy "uart:sensor_uart"
+Warning (10492): VHDL Process Statement warning at uart.vhd(26): signal "rx_check" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at uart.vhd(45): signal "rx_check" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (12125): Using design file sin_cos_rom.vhd, which is not specified as a design file for the current project, but contains definitions for 2 design units and 1 entities in project
+    Info (12022): Found design unit 1: sin_cos_rom-SYN
+    Info (12023): Found entity 1: sin_cos_rom
+Info (12128): Elaborating entity "sin_cos_rom" for hierarchy "sin_cos_rom:sensor_sin_cos"
+Info (12128): Elaborating entity "altsyncram" for hierarchy "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component"
+Info (12130): Elaborated megafunction instantiation "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component"
+Info (12133): Instantiated megafunction "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component" with the following parameter:
+    Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
+    Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
+    Info (12134): Parameter "init_file" = "sin_cos_bin.mif"
+    Info (12134): Parameter "intended_device_family" = "Cyclone II"
+    Info (12134): Parameter "lpm_hint" = "ENABLE_RUNTIME_MOD=NO"
+    Info (12134): Parameter "lpm_type" = "altsyncram"
+    Info (12134): Parameter "numwords_a" = "722"
+    Info (12134): Parameter "operation_mode" = "ROM"
+    Info (12134): Parameter "outdata_aclr_a" = "NONE"
+    Info (12134): Parameter "outdata_reg_a" = "CLOCK0"
+    Info (12134): Parameter "widthad_a" = "10"
+    Info (12134): Parameter "width_a" = "12"
+    Info (12134): Parameter "width_byteena_a" = "1"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_em71.tdf
+    Info (12023): Found entity 1: altsyncram_em71
+Info (12128): Elaborating entity "altsyncram_em71" for hierarchy "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated"
+Warning (14284): Synthesized away the following node(s):
+    Warning (14285): Synthesized away the following RAM node(s):
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[0]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[1]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[2]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[3]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[4]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[5]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[6]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[7]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[8]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[9]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[10]"
+        Warning (14320): Synthesized away node "sin_cos_rom:sensor_sin_cos|altsyncram:altsyncram_component|altsyncram_em71:auto_generated|q_a[11]"
+Info (278001): Inferred 1 megafunctions from design logic
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Div0"
+Info (12130): Elaborated megafunction instantiation "lpm_divide:Div0"
+Info (12133): Instantiated megafunction "lpm_divide:Div0" with the following parameter:
+    Info (12134): Parameter "LPM_WIDTHN" = "17"
+    Info (12134): Parameter "LPM_WIDTHD" = "8"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_lem.tdf
+    Info (12023): Found entity 1: lpm_divide_lem
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_vlh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_vlh
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_03f.tdf
+    Info (12023): Found entity 1: alt_u_div_03f
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_lkc.tdf
+    Info (12023): Found entity 1: add_sub_lkc
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_mkc.tdf
+    Info (12023): Found entity 1: add_sub_mkc
+Info (13000): Registers with preset signals will power-up high
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning (13004): Presettable and clearable registers converted to equivalent circuits with latches. Registers power-up to an undefined state, and DEVCLRn places the registers in an undefined state.
+    Warning (13310): Register "read_state.check_sum" is converted into an equivalent circuit using register "read_state.check_sum~_emulated" and latch "read_state.check_sum~1"
+    Warning (13310): Register "read_state.head" is converted into an equivalent circuit using register "read_state.head~_emulated" and latch "read_state.head~1"
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "x[0]" is stuck at GND
+    Warning (13410): Pin "x[1]" is stuck at GND
+    Warning (13410): Pin "x[2]" is stuck at GND
+    Warning (13410): Pin "x[3]" is stuck at GND
+    Warning (13410): Pin "x[4]" is stuck at GND
+    Warning (13410): Pin "x[5]" is stuck at GND
+    Warning (13410): Pin "x[6]" is stuck at GND
+    Warning (13410): Pin "x[7]" is stuck at GND
+    Warning (13410): Pin "x[8]" is stuck at GND
+    Warning (13410): Pin "x[9]" is stuck at GND
+    Warning (13410): Pin "x[10]" is stuck at GND
+    Warning (13410): Pin "x[11]" is stuck at GND
+    Warning (13410): Pin "y[0]" is stuck at GND
+    Warning (13410): Pin "y[1]" is stuck at GND
+    Warning (13410): Pin "y[2]" is stuck at GND
+    Warning (13410): Pin "y[3]" is stuck at GND
+    Warning (13410): Pin "y[4]" is stuck at GND
+    Warning (13410): Pin "y[5]" is stuck at GND
+    Warning (13410): Pin "y[6]" is stuck at GND
+    Warning (13410): Pin "y[7]" is stuck at GND
+    Warning (13410): Pin "y[8]" is stuck at GND
+    Warning (13410): Pin "y[9]" is stuck at GND
+    Warning (13410): Pin "y[10]" is stuck at GND
+    Warning (13410): Pin "y[11]" is stuck at GND
+    Warning (13410): Pin "z[0]" is stuck at GND
+    Warning (13410): Pin "z[1]" is stuck at GND
+    Warning (13410): Pin "z[2]" is stuck at GND
+    Warning (13410): Pin "z[3]" is stuck at GND
+    Warning (13410): Pin "z[4]" is stuck at GND
+    Warning (13410): Pin "z[5]" is stuck at GND
+    Warning (13410): Pin "z[6]" is stuck at GND
+    Warning (13410): Pin "z[7]" is stuck at GND
+    Warning (13410): Pin "z[8]" is stuck at GND
+    Warning (13410): Pin "z[9]" is stuck at GND
+    Warning (13410): Pin "z[10]" is stuck at GND
+    Warning (13410): Pin "z[11]" is stuck at GND
+    Warning (13410): Pin "dbg2[7]" is stuck at GND
+Info (17049): 64 registers lost all their fanouts during netlist optimizations.
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 550 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 3 input pins
+    Info (21059): Implemented 52 output pins
+    Info (21061): Implemented 495 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 96 warnings
+    Info: Peak virtual memory: 554 megabytes
+    Info: Processing ended: Mon May 30 16:37:45 2016
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:03
+
+

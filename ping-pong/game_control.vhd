@@ -8,6 +8,9 @@ port(
 	rst, clk1, clk2: in std_logic;
 	key_in: in std_logic_vector(2 downto 0);
 	sensor_in: in std_logic;
+	sensor_in_1: in std_logic;
+	sensor_in_2: in std_logic;
+	start_clk: in std_logic;
 	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vga_hs, vga_vs: out std_logic;
@@ -57,7 +60,9 @@ port(
 	rst, clk: in std_logic;
 	start: in std_logic;
 	score1, score2: out integer range 0 to 15;
-	sensor_in: in std_logic;
+	sensor_in_1: in std_logic;
+	sensor_in_2: in std_logic;
+	start_clk: in std_logic;
 	ballX: out integer range 0 to ballXRange;
 	ballY: out integer range 0 to ballYRange;
 	ballZ: out integer range 0 to ballZRange;
@@ -109,7 +114,7 @@ begin
 		ballXRange, ballYRange, ballZRange,
 		patXRange, patYRange, patZRange)
 						port map(
-		rst, clk2, start, s1, s2, sensor_in,
+		rst, clk1, start, s1, s2, sensor_in_1, sensor_in_2, start_clk,
 		ballX, ballY, ballZ,
 		pat1X, pat1Y, pat1Z,
 		pat2X, pat2Y, pat2Z);
