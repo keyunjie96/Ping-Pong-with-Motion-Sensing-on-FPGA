@@ -128,24 +128,35 @@ begin
 	end process;
 	
 ----------------- 解析键盘输入 ------------------
-	process(rst, key_in)
+	process(rst, key_in, clk1)
 	begin
 		if rst = '0' then
 			start <= '0';
 			scene <= '0';
-		elsif (scene = '0') then
+		elsif rising_edge(clk1) then
+			if start = '1' then
+				start <= '0';
+			end if;
+		end if;
 		-- 处理回车键
-			if key_in = "100" then
+			if key_in = "100" and scene = '0' then
 				start <= '1';
 				scene <= '1';
 			end if;
-		else
-		-- 处理esc
+--		-- 处理esc
 			if key_in = "111" then
 				start <= '0';
 				scene <= '0';
 			end if;
-		end if;
+--			case key_in(2 downto 0) is
+--				when "001" => ballX <= ballX - 1;
+--				when "010" => ballX <= ballX + 1;
+--				when "101" => ballY <= ballY + 1;
+--				when "110" => ballY <= ballY - 1;
+--				when "011" => ballZ <= ballZ + 1;
+--				when "111" => ballZ <= ballZ - 1;
+--				when others => null;
+--			end case;
 	end process;
 
 end architecture;

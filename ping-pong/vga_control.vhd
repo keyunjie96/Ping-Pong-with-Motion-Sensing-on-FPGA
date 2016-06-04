@@ -101,7 +101,7 @@ procedure calcBallPos(signal x: in integer range 0 to ballXRange;
 begin
 	--xp <= ballXRange / 2 + (ballZRange + 2 * (ballZRange - z) / 3) * (ballXRange / 2 - x * 320 / ballXRange) / ballXRange;
 	xp <= x * 320 / ballXRange;
-	yp <= (ballYRange - y) * 300 / ballYRange - 50 + (ballZRange - z) * 3 / 2;
+	yp <= (ballYRange - y) * 140 / ballYRange - 50 + (ballZRange - z);
 	r <= (ballZRange - z) / 8 + 7;
 end procedure;
 
@@ -114,7 +114,7 @@ procedure calcPatPos(signal x: in integer range 0 to patXRange;
 begin
 	--xp <= ballXRange / 2 + (ballZRange + 2 * (ballZRange - z) / 3) * (ballXRange / 2 - x * 320 / ballXRange) / ballXRange;
 	xp <= x * 320 / patXRange;
-	yp <= (patYRange - y) * 300 / patYRange - 150 + (ballZRange - z) * 2;
+	yp <= (patYRange - y) * 140 / patYRange - 150 + (ballZRange - z);
 	r <= (ballZRange - z) / 4 + 20;
 end procedure;
 
