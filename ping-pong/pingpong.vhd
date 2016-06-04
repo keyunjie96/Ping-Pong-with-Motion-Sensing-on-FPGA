@@ -8,7 +8,6 @@ port(
 	------------------------    Clock Input        ------------------------
 	clk1: in std_logic;	-- 100M
 	clk2: in std_logic;  -- 24M
-	start_clk : in std_logic;
 	------------------------    reset      --------------------------------
 	rst: in std_logic;
 	
@@ -26,10 +25,7 @@ port(
 	
 	------------------------    VGA      ----------------------------------
 	vga_hs,vga_vs: out STD_LOGIC;
-	vga_r,vga_g,vga_b: out STD_LOGIC_vector(2 downto 0);
-	
-	------------------------   DEBUG    -----------------------------------
-	debug_clk: in std_logic
+	vga_r,vga_g,vga_b: out STD_LOGIC_vector(2 downto 0)
 );
 end entity;
 
@@ -50,7 +46,6 @@ port(
 	key_in: in std_logic_vector(2 downto 0);
 	sensor_in_1: in std_logic;
 	sensor_in_2: in std_logic;
-	start_clk : in std_logic;
 	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vga_hs, vga_vs: out std_logic;
@@ -107,7 +102,6 @@ begin
 		clk2 => clk2,
 		sensor_in_1 => sensor_in_1,
 		sensor_in_2 => sensor_in_2,
-		start_clk => start_clk,
 		key_in => keyboard_oper,
 		sram_data => sram_data_temp,
 		sram_addr => sram_addr_temp,

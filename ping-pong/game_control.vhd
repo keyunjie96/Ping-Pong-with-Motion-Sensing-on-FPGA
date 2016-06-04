@@ -62,7 +62,6 @@ port(
 	score1, score2: out integer range 0 to 15;
 	sensor_in_1: in std_logic;
 	sensor_in_2: in std_logic;
-	start_clk: in std_logic;
 	ballX: out integer range 0 to ballXRange;
 	ballY: out integer range 0 to ballYRange;
 	ballZ: out integer range 0 to ballZRange;
@@ -96,6 +95,7 @@ end component;
 	
 	---------------- 时钟分频 -----------------
 	signal clk50: std_logic := '0'; -- 50M时钟
+	signal cnt: integer range 0 to 1000000 := 0;
 	
 begin
 
@@ -114,7 +114,7 @@ begin
 		ballXRange, ballYRange, ballZRange,
 		patXRange, patYRange, patZRange)
 						port map(
-		rst, clk1, start, s1, s2, sensor_in_1, sensor_in_2, start_clk,
+		rst, clk1, start, s1, s2, sensor_in_1, sensor_in_2,
 		ballX, ballY, ballZ,
 		pat1X, pat1Y, pat1Z,
 		pat2X, pat2Y, pat2Z);
@@ -143,20 +143,45 @@ begin
 				start <= '1';
 				scene <= '1';
 			end if;
---		-- 处理esc
+		-- 处理esc
 			if key_in = "111" then
 				start <= '0';
 				scene <= '0';
 			end if;
---			case key_in(2 downto 0) is
---				when "001" => ballX <= ballX - 1;
---				when "010" => ballX <= ballX + 1;
---				when "101" => ballY <= ballY + 1;
---				when "110" => ballY <= ballY - 1;
---				when "011" => ballZ <= ballZ + 1;
---				when "111" => ballZ <= ballZ - 1;
---				when others => null;
---			end case;
 	end process;
+	
+--	process(clk2, key_in)
+--	begin
+--		if rising_edge(clk2) then
+--			cnt <= cnt + 1;
+--			if (cnt = 500000) then
+--				case key_in(2 downto 0) is
+--					when "001" => pat1X <= pat1X - 1;
+--					when "010" => pat1X <= pat1X + 1;
+--					when "101" => 
+--						pat1Y <= pat1Y + 1;
+--						if pat1Y = 90 then
+--							pat1Y <= 10;
+--						end if;
+--					when "110" => 
+--						pat1Y <= pat1Y - 1;
+--						if pat1Y = 10 then
+--							pat1Y <= 90;
+--						end if;
+--					when "011" => 
+--						pat1Z <= pat1Z + 1;
+--						if pat1Z = patZRange then
+--							pat1Z <= 0;
+--						end if;
+--					when "111" => 
+--						pat1Z <= pat1Z - 1;
+--						if pat1Z = 0 then
+--							pat1Z <= patZRange;
+--						end if;
+--					when others => null;
+--				end case;
+--			end if;
+--		end if;
+--	end process;
 
 end architecture;

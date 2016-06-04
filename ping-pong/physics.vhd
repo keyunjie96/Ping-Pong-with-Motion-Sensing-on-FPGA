@@ -16,7 +16,6 @@ port(
 	rst, clk: in std_logic;
 	rx1: in std_logic;
 	rx2: in std_logic;
-	start_clk: in std_logic;
 	ballX: out integer range 0 to ballXRange;
 	ballY: out integer range 0 to ballYRange;
 	ballZ: out integer range 0 to ballZRange;
@@ -25,7 +24,8 @@ port(
 	pat1Z: out integer range 0 to patZRange;
 	pat2X: out integer range 0 to patXRange;
 	pat2Y: out integer range 0 to patYRange;
-	pat2Z: out integer range 0 to patZRange);
+	pat2Z: out integer range 0 to patZRange;
+	status: out std_logic_vector(1 downto 0));
 end entity;
 
 architecture behav of physics is
@@ -129,8 +129,8 @@ begin
 		elsif rising_edge(clk) then
 			pat1X <= pat1_X;
 			pat2X <= pat2_X;
-			pat1Y <= 0+10;
-			pat2Y <= patYRange-10;
+			--pat1Y <= 0+10;
+			--pat2Y <= patYRange-10;
 			--pat1X <= x/(720/(patXRange));--+patXRange/2;
 			--pat1Y <= y/(720/(patYRange));--+patYRange/2;																																																																									
 			--pat1Z <= z/(720/(patZRange));--+patZRange/2;
@@ -158,6 +158,7 @@ begin
 					if pat1_hit = '1' and ball_X > 0 and ball_X < ballXRange then
 							ball_state <= pat1Range;
 							catch_state <= pat2;
+							status <= "01";
 					elsif cnt mod 5000000  = 0 then
 						if (rotate_cw = '1') then
 							ball_ang <= ball_ang - 5;
@@ -172,12 +173,18 @@ begin
 						end if;
 					end if;
 					ball_X <= pat1_X + 20 * cosx / 1000;
+					ball_Y <= 90;
 					ball_Z <= 20 + 20 * sinx / 1000;
 				when others =>
 					if cnt mod 10000000 = 0 then
 					--------------球超出上下边界，游戏结束，回归等待---------------
-						if ((ball_z < 30 or ball_Z > ballZRange - 30) and ball_state /= waiting) then
+						if ((ball_z < 10 or ball_Z > ballZRange - 10) and ball_state /= waiting) then
 							ball_state <= waiting;
+							if (ball_z < 10) then
+								status <= "10";
+							elsif (ball_z > ballZRange - 10) then
+								status <= "11";
+							end if;
 						--------------球超出左右边界---------------
 						elsif ((ball_X < 30)  and ball_state /= left_border) then
 							if ball_ang > 0 then
@@ -215,9 +222,9 @@ begin
 						ball_Z <= ball_Z + ball_v * sinx / 1000;
 						
 						if (catch_state = pat1) then
-							ball_pos_addr <= std_logic_vector(to_unsigned(ballZRange - ball_Z - 20, ball_pos_addr'length));
+							ball_pos_addr <= std_logic_vector(to_unsigned(ballZRange - ball_Z, ball_pos_addr'length));
 						else
-							ball_pos_addr <= std_logic_vector(to_unsigned(ball_Z - 20, ball_pos_addr'length));
+							ball_pos_addr <= std_logic_vector(to_unsigned(ball_Z, ball_pos_addr'length));
 						end if;
 					end if;
 			end case;

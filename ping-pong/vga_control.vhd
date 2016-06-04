@@ -101,8 +101,8 @@ procedure calcBallPos(signal x: in integer range 0 to ballXRange;
 begin
 	--xp <= ballXRange / 2 + (ballZRange + 2 * (ballZRange - z) / 3) * (ballXRange / 2 - x * 320 / ballXRange) / ballXRange;
 	xp <= x * 320 / ballXRange;
-	yp <= (ballYRange - y) * 140 / ballYRange - 50 + (ballZRange - z);
-	r <= (ballZRange - z) / 8 + 7;
+	yp <= (ballYRange - y) * 80 / ballYRange + 70 + (ballZRange - z);
+	r <= (ballZRange - z) / 10 + 8;
 end procedure;
 
 procedure calcPatPos(signal x: in integer range 0 to patXRange;
@@ -114,8 +114,8 @@ procedure calcPatPos(signal x: in integer range 0 to patXRange;
 begin
 	--xp <= ballXRange / 2 + (ballZRange + 2 * (ballZRange - z) / 3) * (ballXRange / 2 - x * 320 / ballXRange) / ballXRange;
 	xp <= x * 320 / patXRange;
-	yp <= (patYRange - y) * 140 / patYRange - 150 + (ballZRange - z);
-	r <= (ballZRange - z) / 4 + 20;
+	yp <= (patYRange - y) * 80 / patYRange + 80 + (ballZRange - z);
+	r <= (ballZRange - z) / 8 + 20;
 end procedure;
 
 begin
@@ -250,7 +250,7 @@ begin
 				end if;
 				
 				-- 读球图片
-				if (vector_x >= (lball_dis_x - lball_radius) and vector_x < (lball_dis_x + lball_radius) and
+				if (vector_x < 320 and vector_x >= (lball_dis_x - lball_radius) and vector_x < (lball_dis_x + lball_radius) and
 					vector_y >= (lball_dis_y - lball_radius) and vector_y < (lball_dis_y + lball_radius)) then
 					tmp <= (vector_x - lball_dis_x + lball_radius) * 45 / (2 * lball_radius) * 45 + 
 							(vector_y - lball_dis_y + lball_radius) * 45 / (2 * lball_radius);
@@ -258,7 +258,7 @@ begin
 				else
 					lball_addr <= (others => '0');
 				end if;
-				if (vector_x >= (rball_dis_x - rball_radius) and vector_x < (rball_dis_x + rball_radius) and
+				if (vector_x > 320 and vector_x >= (rball_dis_x - rball_radius) and vector_x < (rball_dis_x + rball_radius) and
 					vector_y >= (rball_dis_y - rball_radius) and vector_y < (rball_dis_y + rball_radius)) then
 					tmp <= (vector_x - rball_dis_x + rball_radius) * 45 / (2 * rball_radius) * 45 + 
 							(vector_y - rball_dis_y + rball_radius) * 45 / (2 * rball_radius);
@@ -268,7 +268,7 @@ begin
 				end if;
 				
 				-- 读拍图片（拍1）
-				if (vector_x >= (lpat1_dis_x - lpat1_radius) and vector_x < (lpat1_dis_x + lpat1_radius) and
+				if (vector_x < 320 and vector_x >= (lpat1_dis_x - lpat1_radius) and vector_x < (lpat1_dis_x + lpat1_radius) and
 						vector_y >= (lpat1_dis_y - lpat1_radius) and vector_y < (lpat1_dis_y + lpat1_radius)) then
 					tmp2 <= (vector_x - lpat1_dis_x + lpat1_radius) * 45 / (2 * lpat1_radius) * 45 + 
 							(vector_y - lpat1_dis_y + lpat1_radius) * 45 / (2 * lpat1_radius);
@@ -276,7 +276,7 @@ begin
 				else
 					lpat1_addr <= (others => '0');
 				end if;
-				if (vector_x >= (rpat1_dis_x - rpat1_radius) and vector_x < (rpat1_dis_x + rpat1_radius) and
+				if (vector_x > 320 and vector_x >= (rpat1_dis_x - rpat1_radius) and vector_x < (rpat1_dis_x + rpat1_radius) and
 						vector_y >= (rpat1_dis_y - rpat1_radius) and vector_y < (rpat1_dis_y + rpat1_radius)) then
 					tmp2 <= (vector_x - rpat1_dis_x + rpat1_radius) * 45 / (2 * rpat1_radius) * 45 + 
 							(vector_y - rpat1_dis_y + rpat1_radius) * 45 / (2 * rpat1_radius);
@@ -286,7 +286,7 @@ begin
 				end if;
 				
 				-- 读拍图片（拍2）
-				if (vector_x >= (lpat2_dis_x - lpat2_radius) and vector_x < (lpat2_dis_x + lpat2_radius) and
+				if (vector_x < 320 and vector_x >= (lpat2_dis_x - lpat2_radius) and vector_x < (lpat2_dis_x + lpat2_radius) and
 						vector_y >= (lpat2_dis_y - lpat2_radius) and vector_y < (lpat2_dis_y + lpat2_radius)) then
 					tmp2 <= (vector_x - lpat2_dis_x + lpat2_radius) * 45 / (2 * lpat2_radius) * 45 + 
 							(vector_y - lpat2_dis_y + lpat2_radius) * 45 / (2 * lpat2_radius);
@@ -294,7 +294,7 @@ begin
 				else
 					lpat2_addr <= (others => '0');
 				end if;
-				if (vector_x >= (rpat2_dis_x - rpat2_radius) and vector_x < (rpat2_dis_x + rpat2_radius) and
+				if (vector_x > 320 and vector_x >= (rpat2_dis_x - rpat2_radius) and vector_x < (rpat2_dis_x + rpat2_radius) and
 						vector_y >= (rpat2_dis_y - rpat2_radius) and vector_y < (rpat2_dis_y + rpat2_radius)) then
 					tmp2 <= (vector_x - rpat2_dis_x + rpat2_radius) * 45 / (2 * rpat2_radius) * 45 + 
 							(vector_y - rpat2_dis_y + rpat2_radius) * 45 / (2 * rpat2_radius);
@@ -350,7 +350,7 @@ begin
 					-- 2. 右侧：球的Z在0~ballZRange/2区间，强行覆盖上面，否则覆盖下面
 					elsif (vector_x >= 22 and vector_x < 300 and vector_y >= 253 and vector_y < 275) then
 						if (ballZ < ballZRange / 2) then
-							if (vector_x < 320 and not lball_data = "000000000") then
+							if (lball_data /= "000000000") then
 								r1 <= lball_data(8 downto 6);
 								g1 <= lball_data(5 downto 3);
 								b1 <= lball_data(2 downto 0);
@@ -370,7 +370,7 @@ begin
 							g1 <= "010";
 							b1 <= "010";
 						else
-							if (vector_x > 320 and not rball_data = "000000000") then
+							if (rball_data /= "000000000") then
 								r1 <= rball_data(8 downto 6);
 								g1 <= rball_data(5 downto 3);
 								b1 <= rball_data(2 downto 0);

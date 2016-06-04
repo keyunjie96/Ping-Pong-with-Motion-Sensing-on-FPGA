@@ -40,14 +40,14 @@ begin
 	case scancode(7 downto 0) is
 	-- 处理回车键和ESC键
 		when "01011010" => oper <= "100";  -- enter
-		--when "01110110" => oper <= "111";  -- esc
+		when "01110110" => oper <= "111";  -- esc
 	-- WASDQE：调试用
-		when "00011100" => oper <= "001"; -- A
-		when "00100011" => oper <= "010"; -- D
-		when "00011101" => oper <= "101"; -- W
-		when "00011011" => oper <= "110"; -- S
-		when "00010101" => oper <= "011"; -- Q
-		when "00100100" => oper <= "111"; -- E
+--		when "00011100" => oper <= "001"; -- A
+--		when "00100011" => oper <= "010"; -- D
+--		when "00011101" => oper <= "101"; -- W
+--		when "00011011" => oper <= "110"; -- S
+--		when "00010101" => oper <= "011"; -- Q
+--		when "00100100" => oper <= "111"; -- E
 		when others => oper <="000";
 	end case;
 end process;
