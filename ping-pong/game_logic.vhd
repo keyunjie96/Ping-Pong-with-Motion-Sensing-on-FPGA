@@ -102,27 +102,27 @@ begin
 	end process;
 
 -------------- 判断得分 -----------------
---	process(ballX, ballY, ballZ, pat1X, pat1Y, pat1Z, pat2X, pat2Y, pat2Z)
---	begin
---		if point_s = Ago then
---			if (ballZ > ballZRange - pat2Z) then
---				if () -- 球与拍子不接触
---					score1 <= score1 + 1;
---					point_s <= finish;
---				else
---					point_s <= idle;
---				end if;
---			end if;
---		elsif point_s = Bgo then
---			if (ballZ < pat1Z) then
---				if () -- 球与拍子不接触
---					score2 <= score2 + 1;
---					point_s <= finish;
---				else
---					point_s <= idle;
---				end if;
---			end if;
---		end if;
---	end process;
+	process(ballX, ballY, ballZ, pat1X, pat1Y, pat1Z, pat2X, pat2Y, pat2Z)
+	begin
+		if point_s = Ago then
+			if (ballZ > ballZRange - pat2Z) then
+				if (ballZ > ballZRange - 5) -- 球与拍子未接触
+					score1 <= score1 + 1;
+					point_s <= finish;
+				else
+					point_s <= idle;
+				end if;
+			end if;
+		elsif point_s = Bgo then
+			if (ballZ < pat1Z) then
+				if (ballZ < 5) -- 球与拍子未接
+					score2 <= score2 + 1;
+					point_s <= finish;
+				else
+					point_s <= idle;
+				end if;
+			end if;
+		end if;
+	end process;
 
 end architecture;

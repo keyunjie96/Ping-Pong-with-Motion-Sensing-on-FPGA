@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
-use ieee.std_logic_arith.all;
+USE ieee.numeric_std.ALL;
 
 -- physics 是底层的物理类，接受来自传感器的输入，给出每一时刻球和拍的位置
 entity physics is
@@ -48,7 +48,18 @@ signal pat2_hit : std_logic;
 type b_s is (waiting, flying, pat1Range, pat2Range, left_border, right_border); signal ball_state : b_s;
 type c_s is (pat1, pat2); signal catch_state : c_s;
 signal rotate_cw : std_logic;
--- 还需要一个component 获取球拍数据
+
+signal tmp_ball_y: std_logic_vector(6 downto 0);
+signal ball_pos_addr: std_logic_vector(7 downto 0);
+
+component rom_ball_pos IS
+	PORT
+	(
+		address		: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		clock		: IN STD_LOGIC  := '1';
+		q		: OUT STD_LOGIC_VECTOR (6 DOWNTO 0)
+	);
+END component;
 component sin_cos is
 port(
 	clk : in std_logic;
@@ -65,6 +76,7 @@ port(
 	is_hit : out std_logic
 );
 end component;
+
 begin
 	sin_cos_component 	: sin_cos port map(
 		clk => clk,
@@ -90,6 +102,9 @@ begin
 		z => pat2_Z,
 		is_hit => pat2_hit
 	);
+	
+	digital_rom_ball_pos : rom_ball_pos port map(
+		ball_pos_addr, clk, tmp_ball_y);
 	
 ------------------  复位以及获得拍信息  ----------------------
 	process(rst, clk)
@@ -189,7 +204,14 @@ begin
 							--ball_state <= flying;
 						end if;
 						ball_X <= ball_X + ball_v * cosx / 1000;
+						ball_Y <= to_integer(unsigned(tmp_ball_y));
 						ball_Z <= ball_Z + ball_v * sinx / 1000;
+						
+						if (catch_state = pat1) then
+							ball_pos_addr <= std_logic_vector(to_unsigned(ballZRange - ball_Z - 20, ball_pos_addr'length));
+						else
+							ball_pos_addr <= std_logic_vector(to_unsigned(ball_Z - 20, ball_pos_addr'length));
+						end if;
 					end if;
 			end case;
 		end if;
