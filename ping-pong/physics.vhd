@@ -41,10 +41,12 @@ signal pat1_X: integer range 0 to patXRange;
 signal pat1_Y: integer range 0 to patYRange;
 signal pat1_Z: integer range 0 to patZRange;
 signal pat1_hit : std_logic;
+signal pat1_v : integer range 0 to 20;
 signal pat2_X: integer range 0 to patXRange;
 signal pat2_Y: integer range 0 to patYRange;
 signal pat2_Z: integer range 0 to patZRange;
 signal pat2_hit : std_logic;
+signal pat2_v : integer range 0 to 20;
 type b_s is (waiting, flying, pat1Range, pat2Range, left_border, right_border); signal ball_state : b_s;
 type c_s is (pat1, pat2); signal catch_state : c_s;
 signal rotate_cw : std_logic;
@@ -62,7 +64,8 @@ port(
 	rst 	: in std_logic; --低电平复位
 	rx 	: in std_logic; --数据读取，接连uart tx接口
 	x, y, z : out integer;
-	is_hit : out std_logic
+	is_hit : out std_logic;
+	pat_v : out integer range 0 to 20
 );
 end component;
 begin
@@ -79,7 +82,8 @@ begin
 		x => pat1_X,
 		y => pat1_Y,
 		z => pat1_Z,
-		is_hit => pat1_hit
+		is_hit => pat1_hit,
+		pat_v => pat1_v
 	);
 	sensor_pat2_component	: sensor port map(
 		clk => clk,
@@ -88,7 +92,8 @@ begin
 		x => pat2_X,
 		y => pat2_Y,
 		z => pat2_Z,
-		is_hit => pat2_hit
+		is_hit => pat2_hit,
+		pat_v => pat2_v
 	);
 	
 ------------------  复位以及获得拍信息  ----------------------
@@ -175,12 +180,14 @@ begin
 							ball_state <= right_border;
 						--------------球被拍接住---------------
 						--elsif ((ball_Z < 20 and ball_X > pat1_X - 10 and ball_X < pat1_X + 10) and ball_state /= pat1Range and catch_state = pat1) then
-						elsif ball_Z < 50 and ball_state /= pat1Range then --and catch_state = pat1 then 
+						elsif ball_Z < 50 and ball_state /= pat1Range then --and catch_state = pat1 then
+							ball_v <= pat1_v;
 							ball_ang <= -ball_ang;
 							ball_state <= pat1Range;
 							catch_state <= pat2;
 						--elsif ((ball_Z > ballZRange - 20 and ball_X > pat2_X - 10 and ball_X < pat2_X + 10) and ball_state /= pat2Range and catch_state = pat2) then
 						elsif ball_Z > ballZRange - 50 and ball_state /= pat2Range then --and catch_state = pat2 then
+							ball_v <= pat2_v;
 							ball_ang <= -ball_ang;
 							ball_state <= pat2Range;
 							catch_state <= pat1;
