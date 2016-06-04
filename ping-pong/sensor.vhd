@@ -126,7 +126,7 @@ begin
 									ax_h <= (conv_integer(signed(data_buffer(15 downto 8)))*256 + conv_integer(data_buffer(7 downto 0))) / 209;
 									ay_h <= (conv_integer(signed(data_buffer(31 downto 24)))*256 + conv_integer(data_buffer(23 downto 16))) / 209;	
 									az_h <= (conv_integer(signed(data_buffer(47 downto 40)))*256 + conv_integer(data_buffer(39 downto 32))) / 209;	
-									if (ax_h < -15 or  ay_h > 15) then is_hit <= '1';
+									if (ax_h < -10 or  ay_h > 10) then is_hit <= '1';
 									else is_hit <= '0';
 									end if;
 								read_acc <= '1';
