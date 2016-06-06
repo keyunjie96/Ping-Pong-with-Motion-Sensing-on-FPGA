@@ -63,7 +63,7 @@ signal point_s : point_states := idle;
 signal inner_status: std_logic_vector(1 downto 0);
 
 signal server: bit; -- 发球方
-signal s1, s2: integer range 0 to 9;
+signal s1, s2: integer range 0 to 15;
 
 signal x: integer range 0 to ballXRange;
 signal y: integer range 0 to ballYRange;
@@ -102,15 +102,15 @@ begin
 			point_s <= finish;
 		elsif rising_edge(clk) then
 		-- 判断得分 
-			if (inner_status = "01") then
+			if (inner_status = "01") and (s1 /= 7) and (s2 /= 7) then
 				point_s <= idle;
 			elsif (point_s = idle) then
-				if (inner_status = "10") then -- 球与拍子未接触
-					s1 <= s1 + 1;
+				if (inner_status = "10") then -- 2获胜
+					s2 <= s2 + 1;
 					point_s <= finish;
 				end if;
-				if (inner_status = "11") then -- 球与拍子未接触
-					s2 <= s2 + 1;
+				if (inner_status = "11") then -- 1获胜
+					s1 <= s1 + 1;
 					point_s <= finish;
 				end if;
 			end if;

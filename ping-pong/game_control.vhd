@@ -11,7 +11,7 @@ port(
 	sensor_in_1: in std_logic;
 	sensor_in_2: in std_logic;
 	start_clk: in std_logic;
-	sram_data: in std_logic_vector(26 downto 0);
+	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vga_hs, vga_vs: out std_logic;
 	vga_r, vga_g, vga_b: out std_logic_vector(2 downto 0));
@@ -41,7 +41,7 @@ port(
 	pat2Y: in integer range 0 to patYRange;
 	pat2Z: in integer range 0 to patZRange;
 	
-	sram_data: in std_logic_vector(26 downto 0);
+	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vs, hs: out std_logic;
 	r, g, b: out std_logic_vector(2 downto 0));
@@ -93,6 +93,9 @@ end component;
 	signal scene: std_logic_vector(1 downto 0) := "00";
 	signal start: std_logic := '0';
 	
+	signal key_in_tmp: std_logic_vector(2 downto 0) := "000";
+	signal key_oper: std_logic_vector(2 downto 0) := "000";
+	
 begin
 
 	vga: vga_control generic map (
@@ -117,6 +120,18 @@ begin
 	
 ----------------- 解析键盘输入 ------------------
 
+	process(key_in, clk1)
+	begin
+		if rising_edge(clk1) then
+			if (key_in_tmp /= key_in) then
+				key_oper <= key_in;
+				key_in_tmp <= key_in;
+			else
+				key_oper <= "000";
+			end if;
+		end if;
+	end process;
+
 	process(rst, key_in, clk1, s1, s2)
 	begin
 		if rst = '0' then
@@ -127,20 +142,23 @@ begin
 				start <= '0';
 			end if;
 		end if;
-		if (s1 = 7 or s2 = 7) then
+		if (s1 = 7) then
+			scene <= "10";
+		end if;
+		if (s2 = 7) then
 			scene <= "10";
 		end if;
 		-- 处理回车键
-		if key_in = "100" and scene = "00" then
+		if key_oper = "100" and scene = "00" then
 			start <= '1';
 			scene <= "01";
 		end if;
-		if key_in = "100" and scene = "10" then
+		if key_oper = "100" and scene = "10" then
 			start <= '1';
 			scene <= "01";
 		end if;
 		-- 处理esc
-		if key_in = "111" then
+		if key_oper = "111" then
 			start <= '0';
 			scene <= "00";
 		end if;

@@ -46,7 +46,7 @@ port(
 	key_in: in std_logic_vector(2 downto 0);
 	sensor_in_1: in std_logic;
 	sensor_in_2: in std_logic;
-	sram_data: in std_logic_vector(26 downto 0);
+	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vga_hs, vga_vs: out std_logic;
 	vga_r, vga_g, vga_b: out std_logic_vector(2 downto 0));
@@ -57,17 +57,17 @@ component sram_control is
 port (
 	clk: in std_logic;
 	-- 对应sram
-	data: inout std_logic_vector(26 downto 0);
+	data: inout std_logic_vector(17 downto 0);
 	addr: out std_logic_vector(20 downto 0);
 	RW: out std_logic_vector(1 downto 0);
 	
 	-- 对应内部
-	in_data: out std_logic_vector(26 downto 0);
+	in_data: out std_logic_vector(17 downto 0);
 	in_addr: in std_logic_vector(18 downto 0));
 end component;
 
 signal keyboard_oper: std_logic_vector(2 downto 0);
-signal sram_data_temp: std_logic_vector(26 downto 0);
+signal sram_data_temp: std_logic_vector(17 downto 0);
 signal sram_addr_temp: std_logic_vector(18 downto 0);
 
 begin
@@ -86,7 +86,7 @@ begin
    ----------------------------------------------------------------
 	sram: sram_control port map (
 		clk => clk2,
-		data => sram_data(26 downto 0),
+		data => sram_data(17 downto 0),
 		addr => sram_addr,
 		RW => sram_RW,
 		in_data => sram_data_temp,

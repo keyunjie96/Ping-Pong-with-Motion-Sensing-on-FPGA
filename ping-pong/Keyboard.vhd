@@ -7,7 +7,7 @@ entity Keyboard is
 port (
 	datain, clkin : in std_logic ; -- PS2 clk and data
 	fclk, rst : in std_logic ;  -- filter clock
-	fokout : out std_logic ;  -- data output enable signal
+--	fokout : out std_logic ;  -- data output enable signal
 	scancode : out std_logic_vector(7 downto 0) -- scan code signal output
 	) ;
 end Keyboard ;
@@ -28,7 +28,6 @@ begin
 		xor code(4) xor code(5) xor code(6) xor code(7) ;
 	
 	scancode <= code when fok = '1' ;
-	fokout <= fok;
 	
 	process(rst, fclk)
 	begin
