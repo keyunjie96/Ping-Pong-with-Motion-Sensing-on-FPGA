@@ -222,11 +222,11 @@ begin
 						else if ball_Z > ballZRange - 60 or ball_Z < 60 or ball_X > ballXRange - 40 or ball_X < 40 then
 							ball_state <= flying;
 						end if;
-						
+					
 							ball_X <= ball_X + ball_v * cosx / 1000;
 							ball_Y <= to_integer(unsigned(tmp_ball_y));
 							ball_Z <= ball_Z + ball_v * sinx / 1000;
-						
+						end if;
 						if (catch_state = pat1) then
 							ball_pos_addr <= std_logic_vector(to_unsigned(ball_Z, ball_pos_addr'length));
 						else
