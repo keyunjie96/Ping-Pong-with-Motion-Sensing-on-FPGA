@@ -6,5 +6,5 @@ ping-pong/*.bak
 ping-pong/res/*.bmp
 ping-pong/res/*.txt
 ping-pong/res/*.m
-ping-pong/res/*.bin
+ping-pong/res/*.bak
 *~

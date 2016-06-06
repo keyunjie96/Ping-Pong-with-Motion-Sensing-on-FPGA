@@ -15,7 +15,7 @@ generic(
 	patZRange: integer := 110);
 port(
 	rst, clk, clk2: in std_logic;
-	scene: in bit;	-- 0：标题界面， 1：游戏界面
+	scene: in std_logic_vector(1 downto 0);	-- 00：标题界面,01：游戏界面,10:游戏结束画面
 	score1, score2: in integer range 0 to 15;
 	ballX: in integer range 0 to ballXRange;
 	ballY: in integer range 0 to ballYRange;
@@ -27,7 +27,7 @@ port(
 	pat2Y: in integer range 0 to patYRange;
 	pat2Z: in integer range 0 to patZRange;
 	
-	sram_data: in std_logic_vector(17 downto 0);
+	sram_data: in std_logic_vector(26 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vs, hs: out std_logic;
 	r, g, b: out std_logic_vector(2 downto 0));
@@ -236,18 +236,11 @@ begin
 	process(clk, vector_x, vector_y)
 	begin
 		if (clk'event and clk='1') then
-			if scene='0' then
-				-- 读背景图片
-				if (vector_x >= 0 and vector_x < 640 and vector_y >= 0 and vector_y < 480) then
-					sram_addr <= std_logic_vector(to_unsigned(vector_x * 480 + vector_y, sram_addr'length));
-				end if;
-				-- 按钮文字
-				
-			else
-				-- 读背景图片
-				if (vector_x >= 0 and vector_x < 640 and vector_y >= 0 and vector_y < 480) then
-					sram_addr <= std_logic_vector(to_unsigned(vector_x * 480 + vector_y, sram_addr'length));
-				end if;
+			-- 读背景图片
+			if (vector_x >= 0 and vector_x < 640 and vector_y >= 0 and vector_y < 480) then
+				sram_addr <= std_logic_vector(to_unsigned(vector_x * 480 + vector_y, sram_addr'length));
+			end if;
+			if scene="01" then
 				
 				-- 读球图片
 				if (vector_x < 320 and vector_x >= (lball_dis_x - lball_radius) and vector_x < (lball_dis_x + lball_radius) and
@@ -302,7 +295,7 @@ begin
 				else
 					rpat2_addr <= (others => '0');
 				end if;
-				
+			
 			end if;
 		end if;
 	end process;
@@ -314,11 +307,11 @@ begin
 			g1	<= "000";
 			b1	<= "000";	
 		elsif (vector_x >= 0 and vector_x < 640 and vector_y >= 0 and vector_y < 480) then
-			if scene = '0' then
+			if scene = "00" then
 				r1 <= sram_data(17 downto 15);
 				g1 <= sram_data(14 downto 12);
 				b1 <= sram_data(11 downto 9);
-			else
+			elsif scene = "01" then
 				if (vector_x >= 310 and vector_x < 325) then
 					r1 <= "001";
 					g1 <= "001";
@@ -397,12 +390,24 @@ begin
 						g1 <= rpat1_data(5 downto 3);
 						b1 <= rpat1_data(2 downto 0);
 					else
-						r1 <= sram_data(8 downto 6);
-						g1 <= sram_data(5 downto 3);
-						b1 <= sram_data(2 downto 0);
+						r1 <= sram_data(26 downto 24);
+						g1 <= sram_data(23 downto 21);
+						b1 <= sram_data(20 downto 18);
 					end if;
 				end if;
 			end if;
+			elsif scene = "10" then
+				if (vector_x >= l_score_x and vector_x < l_score_x + 20 and vector_y >= score_y and vector_y < score_y + 20) then
+					tmp4 <= (vector_x - l_score_x) * 20 + (vector_y - score_y);
+					score_addr <= std_logic_vector(to_unsigned(score1, 4)) & std_LOGIC_VECTOR(to_unsigned(tmp4, 9));
+					r1 <= score_data(8 downto 6);
+					g1 <= score_data(5 downto 3);
+					b1 <= score_data(2 downto 0);
+				else
+					r1 <= sram_data(8 downto 6);
+					g1 <= sram_data(5 downto 3);
+					b1 <= sram_data(2 downto 0);
+				end if;
 		else
 			r1 <= "000";
 			g1	<= "000";
