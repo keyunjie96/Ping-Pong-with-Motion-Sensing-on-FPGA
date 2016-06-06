@@ -222,9 +222,9 @@ begin
 						ball_Z <= ball_Z + ball_v * sinx / 1000;
 						
 						if (catch_state = pat1) then
-							ball_pos_addr <= std_logic_vector(to_unsigned(ballZRange - ball_Z, ball_pos_addr'length));
-						else
 							ball_pos_addr <= std_logic_vector(to_unsigned(ball_Z, ball_pos_addr'length));
+						else
+							ball_pos_addr <= std_logic_vector(to_unsigned(ballZRange - ball_Z, ball_pos_addr'length));
 						end if;
 					end if;
 			end case;
