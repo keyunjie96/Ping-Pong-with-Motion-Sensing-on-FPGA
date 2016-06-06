@@ -27,7 +27,7 @@ port(
 	pat2Y: in integer range 0 to patYRange;
 	pat2Z: in integer range 0 to patZRange;
 	
-	sram_data: in std_logic_vector(26 downto 0);
+	sram_data: in std_logic_vector(17 downto 0);
 	sram_addr: out std_logic_vector(18 downto 0);
 	vs, hs: out std_logic;
 	r, g, b: out std_logic_vector(2 downto 0));
@@ -402,10 +402,16 @@ begin
 					r1 <= score_data(8 downto 6);
 					g1 <= score_data(5 downto 3);
 					b1 <= score_data(2 downto 0);
+				elsif (vector_x >= r_score_x and vector_x < r_score_x + 20 and vector_y >= score_y and vector_y < score_y + 20) then
+					tmp4 <= (vector_x - r_score_x) * 20 + (vector_y - score_y);
+					score_addr <= std_logic_vector(to_unsigned(score2, 4)) & std_LOGIC_VECTOR(to_unsigned(tmp4, 9));
+					r1 <= score_data(8 downto 6);
+					g1 <= score_data(5 downto 3);
+					b1 <= score_data(2 downto 0);
 				else
-					r1 <= sram_data(26 downto 24);
-					g1 <= sram_data(23 downto 21);
-					b1 <= sram_data(20 downto 18);
+					r1 <= sram_data(8 downto 6);
+					g1 <= sram_data(5 downto 3);
+					b1 <= sram_data(2 downto 0);
 				end if;
 			end if;
 		else
