@@ -133,14 +133,14 @@ begin
 									az_h <= (conv_integer(signed(data_buffer(47 downto 40)))*256 + conv_integer(data_buffer(39 downto 32))) / 209;	
 									if (ax_h < -10 or ax_h > 10) then 
 										is_hit <= '1';
-										if(ax_h < -50 or ax_h > 50) then
+										if(ax_h < -26 or ax_h > 26) then
 											pat_v <= patvRange;
 										else
-											pat_v <= (abs(ax_h)-10)/5 + 2;
+											pat_v <= (abs(ax_h)-10)/2 + 2;
 										end if;
 									else 
 										is_hit <= '0';
-										pat_v <= 8;
+										pat_v <= 4;
 									end if;
 								read_acc <= '1';
 								--ay <= ()
