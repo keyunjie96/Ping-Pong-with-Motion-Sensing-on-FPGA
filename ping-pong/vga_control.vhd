@@ -127,7 +127,7 @@ begin
 	digital_rom_l_pat2 : rom_pat port map (lpat2_addr, clk, lpat2_data);
 	digital_rom_r_pat1 : rom_pat port map (rpat1_addr, clk, rpat1_data);
 	digital_rom_r_pat2 : rom_pat port map (rpat2_addr, clk, rpat2_data);
-	--digital_rom_score : rom_score port map (score_addr, clk, score_data);
+	digital_rom_score : rom_score port map (score_addr, clk, score_data);
 	
 	--------------------- 计算球和球拍的位置 ------------------------
 	process(ballX, ballY, ballZ)

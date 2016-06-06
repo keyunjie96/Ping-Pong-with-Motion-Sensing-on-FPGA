@@ -5,7 +5,7 @@ use ieee.std_logic_arith.all;
 
 entity game_control is
 port(
-	rst, clk1, clk2: in std_logic;
+	rst, clk1, clk2: in std_logic;	--clk1: 100M, clk2: 24M
 	key_in: in std_logic_vector(2 downto 0);
 	sensor_in: in std_logic;
 	sensor_in_1: in std_logic;
@@ -116,6 +116,7 @@ begin
 		pat2X, pat2Y, pat2Z);
 	
 ----------------- 解析键盘输入 ------------------
+
 	process(rst, key_in, clk1, s1, s2)
 	begin
 		if rst = '0' then
