@@ -5,7 +5,7 @@ use ieee.std_logic_arith.all;
 
 entity sensor is
 generic(
-	patvRange : integer := 10
+	patvRange : integer := 14
 );
 
 port(
@@ -133,10 +133,10 @@ begin
 									az_h <= (conv_integer(signed(data_buffer(47 downto 40)))*256 + conv_integer(data_buffer(39 downto 32))) / 209;	
 									if (ax_h < -10 or ax_h > 10) then 
 										is_hit <= '1';
-										if(ax_h < -26 or ax_h > 26) then
+										if(ax_h < -20 or ax_h > 20) then
 											pat_v <= patvRange;
 										else
-											pat_v <= (abs(ax_h)-10)/2 + 2;
+											pat_v <= (abs(ax_h)-10) + 4;
 										end if;
 									else 
 										is_hit <= '0';

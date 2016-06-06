@@ -9,12 +9,14 @@ generic(
 	ballXRange: integer := 160;
 	ballYRange: integer := 120;
 	ballZRange: integer := 220;
-	ballvRange: integer := 10;
+	ballvRange: integer := 14;
 	patXRange: integer := 160;						
 	patYRange: integer := 120;
 	patZRange: integer := 110;
 	cntRange: integer := 750000;
-	angRange: integer := 30);
+	angRange: integer := 30;
+	boderXRange: integer := 20;
+	boderZRange: integer := 40);
 port(
 	rst, clk: in std_logic;
 	rx1: in std_logic;
@@ -50,6 +52,7 @@ signal pat2_Y: integer range 0 to patYRange;
 signal pat2_Z: integer range 0 to patZRange;
 signal pat2_hit : std_logic;
 signal pat2_v : integer range 0 to ballvRange;
+signal status_s : std_logic_vector(1 downto 0);
 type b_s is (waiting, flying, pat1Range, pat2Range, left_border, right_border); signal ball_state : b_s;
 type c_s is (pat1, pat2); signal catch_state : c_s;
 signal rotate_cw : std_logic;
@@ -103,7 +106,7 @@ begin
 	sensor_pat2_component	: sensor port map(
 		clk => clk,
 		rst => rst,
-		rx => rx1,
+		rx => rx2,
 		x => pat2_X,
 		y => pat2_Y,
 		z => pat2_Z,
@@ -143,6 +146,7 @@ begin
 -------------------	计算球的状态   -----------------
 	process(rst, clk)
 	begin
+		status <= status_s;
 		ballX <= ball_X;
 		ballY <= ball_Y;
 		ballZ <= ball_Z;
@@ -153,31 +157,55 @@ begin
 			cnt <= 0;
 			rotate_cw <= '1';
 			ball_v <= 8;
+			status_s <= "00";
 		elsif rising_edge(clk) then
 			cnt <= cnt + 1;
 			case ball_state is
 			--------------球等待开始---------------
 				when waiting =>
-					if pat1_hit = '1' and ball_X > 0 and ball_X < ballXRange then
-							ball_state <= pat1Range;
+					if status_s = "10" and pat2_X > 0 and pat2_X < patXRange then
+						if pat2_hit = '1' then
+							catch_state <= pat1;
+							ball_state <= pat2Range;
+						end if;
+						ball_X <= patXRange - (pat2_X + 20 * cosx / 1000);
+						ball_Z <= patZRange - 20 * sinx / 1000 + 40; 
+					elsif status_s /= "10" and pat1_X > 0 and pat1_X < patXRange then
+						if pat1_hit = '1' then
 							catch_state <= pat2;
-							status <= "01";
-					elsif cnt = cntRange then
-						if (rotate_cw = '1') then
-							ball_ang <= ball_ang - 3;
-							if (ball_ang < 90 - angRange) then
-								rotate_cw <= '0';
+							ball_state <= pat1Range;
+						end if;
+						ball_X <= pat1_X + 20 * cosx / 1000;
+						ball_Z <= 20 + 20 * sinx / 1000;
+					end if;
+					if cnt = cntRange then
+						if rotate_cw = '1' then
+							if status_s = "10" then
+								ball_ang <= ball_ang + 3;
+								if ball_ang > -(90 - angRange) then
+									rotate_cw <= '0';
+								end if;
+							else
+								ball_ang <= ball_ang - 3;
+								if ball_ang < 90 - angRange then
+									rotate_cw <= '0';
+								end if;
 							end if;
 						elsif (rotate_cw = '0') then
-							ball_ang <= ball_ang + 3;
-							if (ball_ang > 90 + angRange) then
-								rotate_cw <= '1';
+							if status_s = "10" then
+								ball_ang <= ball_ang - 3;
+								if ball_ang < -(90 + angRange) then
+									rotate_cw <= '1';
+								end if;
+							else
+								ball_ang <= ball_ang + 3;
+								if ball_ang > 90 + angRange then
+									rotate_cw <= '1';
+								end if;
 							end if;
 						end if;
 					end if;
-					ball_X <= pat1_X + 20 * cosx / 1000;
 					ball_Y <= 90;
-					ball_Z <= 20 + 20 * sinx / 1000;
 				when others =>
 				if cnt = cntRange then
 						if ball_X < 0 then
@@ -188,19 +216,19 @@ begin
 						elsif ((ball_z < 10 or ball_Z > ballZRange - 10) and ball_state /= waiting) then
 							ball_state <= waiting;
 							if (ball_z < 10) then
-								status <= "10";
+								status_s <= "10";
 							elsif (ball_z > ballZRange - 10) then
-								status <= "11";
+								status_s <= "11";
 							end if;
 						--------------球超出左右边界---------------
-						elsif (ball_X < 40  and ball_state /= left_border and ball_state /= pat1Range and ball_state /= pat2Range) then
+						elsif (ball_X < boderXRange  and ball_state /= left_border and ball_state /= pat1Range and ball_state /= pat2Range) then
 							if ball_ang > 0 then
 								ball_ang <= 180 - ball_ang;
 							else
 								ball_ang <= -180 - ball_ang;
 							end if;
 							ball_state <= left_border;
-						elsif (ball_X > ballXRange - 40 and ball_state /= right_border and ball_state /= pat1Range and ball_state /= pat2Range) then
+						elsif (ball_X > ballXRange - boderXRange and ball_state /= right_border and ball_state /= pat1Range and ball_state /= pat2Range) then
 							if ball_ang > 0 then
 								ball_ang <= 180 - ball_ang;
 							else
@@ -209,10 +237,10 @@ begin
 							ball_state <= right_border;
 						--------------球被拍接住---------------
 						--elsif ((ball_Z < 20 and ball_X > pat1_X - 10 and ball_X < pat1_X + 10) and ball_state /= pat1Range and catch_state = pat1) then
-						elsif ball_Z < 60 and ball_X > pat1_X - 25 and ball_X < pat1_X + 25 and catch_state = pat1 then --and catch_state = pat1 then
-							if ball_X < pat1_X - 15 and ball_ang < -(90 - angRange) then
+						elsif ball_Z < boderZRange and ball_X > pat1_X - 20 and ball_X < pat1_X + 20 and catch_state = pat1 then --and catch_state = pat1 then
+							if ball_X < pat1_X and ball_ang < -(90 - angRange) then--pat1拍左侧
 								ball_ang <= -(ball_ang + 10);
-							elsif ball_X > pat1_X + 15 and ball_ang > -(90 + angRange) then
+							elsif ball_X > pat1_X and ball_ang > -(90 + angRange) then
 								ball_ang <= -(ball_ang - 10);
 							else
 								ball_ang <= -ball_ang;
@@ -221,11 +249,11 @@ begin
 							ball_state <= pat1Range;
 							catch_state <= pat2;
 						--elsif ((ball_Z > ballZRange - 20 and ball_X > pat2_X - 10 and ball_X < pat2_X + 10) and ball_state /= pat2Range and catch_state = pat2) then
-						elsif ball_Z > ballZRange - 60 and ball_X > patXRange - pat2_X - 25 and ball_X < patXRange - pat2_X + 25 and catch_state = pat2 then --and catch_state = pat2 then
-							if ball_X > patXRange - pat2_X + 15 and ball_ang > (90 - angRange) then
-								ball_ang <= -(ball_ang + 10);
-							elsif ball_X > patXRange - pat2_X + 15 and ball_ang < (90 + angRange) then
+						elsif ball_Z > ballZRange - boderZRange and ball_X > patXRange - pat2_X - 20 and ball_X < patXRange - pat2_X + 20 and catch_state = pat2 then --and catch_state = pat2 then
+							if ball_X < patXRange - pat2_X and ball_ang > (90 - angRange) then--pat2拍左侧
 								ball_ang <= -(ball_ang - 10);
+							elsif ball_X > patXRange - pat2_X and ball_ang < (90 + angRange) then
+								ball_ang <= -(ball_ang + 10);
 							else
 								ball_ang <= -ball_ang;
 							end if;
@@ -234,7 +262,7 @@ begin
 							ball_state <= pat2Range;
 							catch_state <= pat1;
 						--------------球在飞行，平凡情况---------------
-						else if ball_Z > ballZRange - 60 or ball_Z < 60 or ball_X > ballXRange - 40 or ball_X < 40 then
+						else if ball_Z > ballZRange - boderZRange or ball_Z < boderZRange or ball_X > ballXRange - boderXRange or ball_X < boderXRange then
 							ball_state <= flying;
 						end if;
 					
