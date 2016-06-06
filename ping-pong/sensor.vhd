@@ -4,13 +4,17 @@ use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 entity sensor is
+generic(
+	patvRange : integer := 10
+);
+
 port(
 	clk 	: in std_logic; --100MHz时钟
 	rst 	: in std_logic; --低电平复位
 	rx 	: in std_logic; --数据读取，接连uart tx接口
 	x, y, z : out integer;
 	is_hit : out std_logic;
-	pat_v : out integer range 0 to 20
+	pat_v : out integer range 0 to patvRange
 );
 end entity;
 
@@ -129,10 +133,10 @@ begin
 									az_h <= (conv_integer(signed(data_buffer(47 downto 40)))*256 + conv_integer(data_buffer(39 downto 32))) / 209;	
 									if (ax_h < -10 or ax_h > 10) then 
 										is_hit <= '1';
-										if(ax_h < -20 or ax_h > 20) then
-											pat_v <= 20;
+										if(ax_h < -50 or ax_h > 50) then
+											pat_v <= patvRange;
 										else
-											pat_v <= (abs(ax_h)-10)/2 + 10;
+											pat_v <= (abs(ax_h)-10)/4 + 5;
 										end if;
 									else 
 										is_hit <= '0';

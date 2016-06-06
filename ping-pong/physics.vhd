@@ -9,6 +9,7 @@ generic(
 	ballXRange: integer := 160;
 	ballYRange: integer := 120;
 	ballZRange: integer := 220;
+	ballvRange: integer := 10;
 	patXRange: integer := 160;						
 	patYRange: integer := 120;
 	patZRange: integer := 110);
@@ -32,21 +33,21 @@ architecture behav of physics is
 signal cnt : integer range 0 to 100000000;
 
 signal ball_ang : integer range -180 to 180; signal sinx, cosx : integer range -1000 to 1000;
-signal ball_X: integer range 0 to ballXRange;
+signal ball_X: integer range -50 to ballXRange + 50;
 signal ball_Y: integer range 0 to ballYRange;
-signal ball_Z: integer range 0 to ballZRange;
-signal ball_v: integer range 0 to 20;
+signal ball_Z: integer range -50 to ballZRange + 50;
+signal ball_v: integer range 0 to ballvRange;
 
 signal pat1_X: integer range 0 to patXRange;
 signal pat1_Y: integer range 0 to patYRange;
 signal pat1_Z: integer range 0 to patZRange;
 signal pat1_hit : std_logic;
-signal pat1_v : integer range 0 to 20;
+signal pat1_v : integer range 0 to ballvRange;
 signal pat2_X: integer range 0 to patXRange;
 signal pat2_Y: integer range 0 to patYRange;
 signal pat2_Z: integer range 0 to patZRange;
 signal pat2_hit : std_logic;
-signal pat2_v : integer range 0 to 20;
+signal pat2_v : integer range 0 to ballvRange;
 type b_s is (waiting, flying, pat1Range, pat2Range, left_border, right_border); signal ball_state : b_s;
 type c_s is (pat1, pat2); signal catch_state : c_s;
 signal rotate_cw : std_logic;
@@ -76,7 +77,7 @@ port(
 	rx 	: in std_logic; --数据读取，接连uart tx接口
 	x, y, z : out integer;
 	is_hit : out std_logic;
-	pat_v : out integer range 0 to 20
+	pat_v : out integer range 0 to ballvRange
 );
 end component;
 
@@ -159,15 +160,15 @@ begin
 							ball_state <= pat1Range;
 							catch_state <= pat2;
 							status <= "01";
-					elsif cnt mod 5000000  = 0 then
+					elsif cnt mod 500000  = 0 then
 						if (rotate_cw = '1') then
-							ball_ang <= ball_ang - 5;
-							if (ball_ang < 35) then
+							ball_ang <= ball_ang - 3;
+							if (ball_ang < 75) then
 								rotate_cw <= '0';
 							end if;
 						elsif (rotate_cw = '0') then
-							ball_ang <= ball_ang + 5;
-							if (ball_ang > 145) then
+							ball_ang <= ball_ang + 3;
+							if (ball_ang > 105) then
 								rotate_cw <= '1';
 							end if;
 						end if;
@@ -176,9 +177,13 @@ begin
 					ball_Y <= 90;
 					ball_Z <= 20 + 20 * sinx / 1000;
 				when others =>
-					if cnt mod 10000000 = 0 then
+				if cnt mod 6500000 = 0 then
+						if ball_X < 0 then
+							ball_X <= 15;
+						elsif ball_X > ballXRange then
+							ball_x <= ballXRange - 15;
 					--------------球超出上下边界，游戏结束，回归等待---------------
-						if ((ball_z < 10 or ball_Z > ballZRange - 10) and ball_state /= waiting) then
+						elsif ((ball_z < 10 or ball_Z > ballZRange - 10) and ball_state /= waiting) then
 							ball_state <= waiting;
 							if (ball_z < 10) then
 								status <= "10";
@@ -186,14 +191,14 @@ begin
 								status <= "11";
 							end if;
 						--------------球超出左右边界---------------
-						elsif ((ball_X < 30)  and ball_state /= left_border) then
+						elsif (ball_X < 40  and ball_state /= left_border and ball_state /= pat1Range and ball_state /= pat2Range) then
 							if ball_ang > 0 then
 								ball_ang <= 180 - ball_ang;
 							else
 								ball_ang <= -180 - ball_ang;
 							end if;
 							ball_state <= left_border;
-						elsif ((ball_X > ballXRange - 30) and ball_state /= right_border) then
+						elsif (ball_X > ballXRange - 40 and ball_state /= right_border and ball_state /= pat1Range and ball_state /= pat2Range) then
 							if ball_ang > 0 then
 								ball_ang <= 180 - ball_ang;
 							else
@@ -202,24 +207,25 @@ begin
 							ball_state <= right_border;
 						--------------球被拍接住---------------
 						--elsif ((ball_Z < 20 and ball_X > pat1_X - 10 and ball_X < pat1_X + 10) and ball_state /= pat1Range and catch_state = pat1) then
-						elsif ball_Z < 50 and ball_state /= pat1Range then --and catch_state = pat1 then
+						elsif ball_Z < 60 and ball_X > pat1_X - 25 and ball_X < pat1_X + 25 and catch_state = pat1 then --and catch_state = pat1 then
 							ball_v <= pat1_v;
 							ball_ang <= -ball_ang;
 							ball_state <= pat1Range;
 							catch_state <= pat2;
 						--elsif ((ball_Z > ballZRange - 20 and ball_X > pat2_X - 10 and ball_X < pat2_X + 10) and ball_state /= pat2Range and catch_state = pat2) then
-						elsif ball_Z > ballZRange - 50 and ball_state /= pat2Range then --and catch_state = pat2 then
+						elsif ball_Z > ballZRange - 60 and ball_X > patXRange - pat2_X - 25 and ball_X < patXRange - pat2_X + 25 and catch_state = pat2 then --and catch_state = pat2 then
 							ball_v <= pat2_v;
 							ball_ang <= -ball_ang;
 							ball_state <= pat2Range;
 							catch_state <= pat1;
 						--------------球在飞行，平凡情况---------------
-						else
-							--ball_state <= flying;
+						else if ball_Z > ballZRange - 60 or ball_Z < 60 or ball_X > ballXRange - 40 or ball_X < 40 then
+							ball_state <= flying;
 						end if;
-						ball_X <= ball_X + ball_v * cosx / 1000;
-						ball_Y <= to_integer(unsigned(tmp_ball_y));
-						ball_Z <= ball_Z + ball_v * sinx / 1000;
+						
+							ball_X <= ball_X + ball_v * cosx / 1000;
+							ball_Y <= to_integer(unsigned(tmp_ball_y));
+							ball_Z <= ball_Z + ball_v * sinx / 1000;
 						
 						if (catch_state = pat1) then
 							ball_pos_addr <= std_logic_vector(to_unsigned(ball_Z, ball_pos_addr'length));
