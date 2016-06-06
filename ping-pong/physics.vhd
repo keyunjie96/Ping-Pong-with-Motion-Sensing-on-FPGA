@@ -167,6 +167,7 @@ begin
 						if pat2_hit = '1' then
 							catch_state <= pat1;
 							ball_state <= pat2Range;
+							status_s <= "01";
 						end if;
 						ball_X <= patXRange - (pat2_X + 20 * cosx / 1000);
 						ball_Z <= patZRange - 20 * sinx / 1000 + 40; 
@@ -174,6 +175,7 @@ begin
 						if pat1_hit = '1' then
 							catch_state <= pat2;
 							ball_state <= pat1Range;
+							status_s <= "01";
 						end if;
 						ball_X <= pat1_X + 20 * cosx / 1000;
 						ball_Z <= 20 + 20 * sinx / 1000;
