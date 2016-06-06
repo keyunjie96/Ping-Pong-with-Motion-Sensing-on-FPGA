@@ -136,7 +136,7 @@ begin
 										if(ax_h < -50 or ax_h > 50) then
 											pat_v <= patvRange;
 										else
-											pat_v <= (abs(ax_h)-10)/4 + 5;
+											pat_v <= (abs(ax_h)-10)/5 + 2;
 										end if;
 									else 
 										is_hit <= '0';
