@@ -7,4 +7,5 @@ ping-pong/res/*.bmp
 ping-pong/res/*.txt
 ping-pong/res/*.m
 ping-pong/res/*.bak
+ping-pong/*.qsf
 *~
