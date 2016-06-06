@@ -12,7 +12,9 @@ generic(
 	ballvRange: integer := 10;
 	patXRange: integer := 160;						
 	patYRange: integer := 120;
-	patZRange: integer := 110);
+	patZRange: integer := 110;
+	cntRange: integer := 750000;
+	angRange: integer := 30);
 port(
 	rst, clk: in std_logic;
 	rx1: in std_logic;
@@ -30,7 +32,7 @@ port(
 end entity;
 
 architecture behav of physics is
-signal cnt : integer range 0 to 100000000;
+signal cnt : integer range 0 to cntRange;
 
 signal ball_ang : integer range -180 to 180; signal sinx, cosx : integer range -1000 to 1000;
 signal ball_X: integer range -50 to ballXRange + 50;
@@ -160,15 +162,15 @@ begin
 							ball_state <= pat1Range;
 							catch_state <= pat2;
 							status <= "01";
-					elsif cnt mod 500000  = 0 then
+					elsif cnt = cntRange then
 						if (rotate_cw = '1') then
 							ball_ang <= ball_ang - 3;
-							if (ball_ang < 75) then
+							if (ball_ang < 90 - angRange) then
 								rotate_cw <= '0';
 							end if;
 						elsif (rotate_cw = '0') then
 							ball_ang <= ball_ang + 3;
-							if (ball_ang > 105) then
+							if (ball_ang > 90 + angRange) then
 								rotate_cw <= '1';
 							end if;
 						end if;
@@ -177,7 +179,7 @@ begin
 					ball_Y <= 90;
 					ball_Z <= 20 + 20 * sinx / 1000;
 				when others =>
-				if cnt mod 6500000 = 0 then
+				if cnt = cntRange then
 						if ball_X < 0 then
 							ball_X <= 15;
 						elsif ball_X > ballXRange then
@@ -208,12 +210,25 @@ begin
 						--------------球被拍接住---------------
 						--elsif ((ball_Z < 20 and ball_X > pat1_X - 10 and ball_X < pat1_X + 10) and ball_state /= pat1Range and catch_state = pat1) then
 						elsif ball_Z < 60 and ball_X > pat1_X - 25 and ball_X < pat1_X + 25 and catch_state = pat1 then --and catch_state = pat1 then
+							if ball_X < pat1_X - 15 and ball_ang < -(90 - angRange) then
+								ball_ang <= -(ball_ang + 10);
+							elsif ball_X > pat1_X + 15 and ball_ang > -(90 + angRange) then
+								ball_ang <= -(ball_ang - 10);
+							else
+								ball_ang <= -ball_ang;
+							end if;
 							ball_v <= pat1_v;
-							ball_ang <= -ball_ang;
 							ball_state <= pat1Range;
 							catch_state <= pat2;
 						--elsif ((ball_Z > ballZRange - 20 and ball_X > pat2_X - 10 and ball_X < pat2_X + 10) and ball_state /= pat2Range and catch_state = pat2) then
 						elsif ball_Z > ballZRange - 60 and ball_X > patXRange - pat2_X - 25 and ball_X < patXRange - pat2_X + 25 and catch_state = pat2 then --and catch_state = pat2 then
+							if ball_X > patXRange - pat2_X + 15 and ball_ang > (90 - angRange) then
+								ball_ang <= -(ball_ang + 10);
+							elsif ball_X > patXRange - pat2_X + 15 and ball_ang < (90 + angRange) then
+								ball_ang <= -(ball_ang - 10);
+							else
+								ball_ang <= -ball_ang;
+							end if;
 							ball_v <= pat2_v;
 							ball_ang <= -ball_ang;
 							ball_state <= pat2Range;
