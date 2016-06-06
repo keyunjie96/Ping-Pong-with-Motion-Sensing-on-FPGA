@@ -28,6 +28,7 @@ begin
 		xor code(4) xor code(5) xor code(6) xor code(7) ;
 	
 	scancode <= code when fok = '1' ;
+	fokout <= fok;
 	
 	process(rst, fclk)
 	begin
