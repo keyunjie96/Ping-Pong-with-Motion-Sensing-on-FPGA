@@ -177,7 +177,7 @@ begin
 					ball_Y <= 90;
 					ball_Z <= 20 + 20 * sinx / 1000;
 				when others =>
-					if cnt mod 10000000 = 0 then
+				if cnt mod 6500000 = 0 then
 						if ball_X < 0 then
 							ball_X <= 15;
 						elsif ball_X > ballXRange then
@@ -191,14 +191,14 @@ begin
 								status <= "11";
 							end if;
 						--------------球超出左右边界---------------
-						elsif ((ball_X < 40)  and ball_state /= left_border and ball_state /= pat1Range and ball_state /= pat2Range) then
+						elsif (ball_X < 40  and ball_state /= left_border and ball_state /= pat1Range and ball_state /= pat2Range) then
 							if ball_ang > 0 then
 								ball_ang <= 180 - ball_ang;
 							else
 								ball_ang <= -180 - ball_ang;
 							end if;
 							ball_state <= left_border;
-						elsif ((ball_X > ballXRange - 40) and ball_state /= right_border and ball_state /= pat1Range and ball_state /= pat2Range) then
+						elsif (ball_X > ballXRange - 40 and ball_state /= right_border and ball_state /= pat1Range and ball_state /= pat2Range) then
 							if ball_ang > 0 then
 								ball_ang <= 180 - ball_ang;
 							else
@@ -219,12 +219,13 @@ begin
 							ball_state <= pat2Range;
 							catch_state <= pat1;
 						--------------球在飞行，平凡情况---------------
-						else
+						else if ball_Z > ballZRange - 60 or ball_Z < 60 or ball_X > ballXRange - 40 or ball_X < 40 then
 							ball_state <= flying;
 						end if;
-						ball_X <= ball_X + ball_v * cosx / 1000;
-						ball_Y <= to_integer(unsigned(tmp_ball_y));
-						ball_Z <= ball_Z + ball_v * sinx / 1000;
+						
+							ball_X <= ball_X + ball_v * cosx / 1000;
+							ball_Y <= to_integer(unsigned(tmp_ball_y));
+							ball_Z <= ball_Z + ball_v * sinx / 1000;
 						
 						if (catch_state = pat1) then
 							ball_pos_addr <= std_logic_vector(to_unsigned(ball_Z, ball_pos_addr'length));
