@@ -91,7 +91,6 @@ begin
 		RW => sram_RW,
 		in_data => sram_data_temp,
 		in_addr => sram_addr_temp);
-	
 
 	----------------------------------------------------------------    
    -- Game
