@@ -3,7 +3,6 @@ ping-pong/incremental_db/*
 ping-pong/output_files/*
 ping-pong/*.qws
 ping-pong/*.bak
-ping-pong/pingpong.qsf
 ping-pong/res/*.bmp
 ping-pong/res/*.txt
 ping-pong/res/*.m

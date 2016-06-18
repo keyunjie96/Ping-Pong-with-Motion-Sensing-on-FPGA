@@ -1,0 +1,135 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2013 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 13.0.0 Build 156 04/24/2013 SJ Full Version
+# Date created = 10:14:43  May 10, 2016
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		pingpong_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Cyclone II"
+set_global_assignment -name DEVICE EP2C20Q240C8
+set_global_assignment -name TOP_LEVEL_ENTITY pingpong
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "10:14:43  MAY 10, 2016"
+set_global_assignment -name LAST_QUARTUS_VERSION 13.0
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
+set_global_assignment -name VHDL_FILE pingpong.vhd
+set_global_assignment -name PARTITION_NETLIST_TYPE POST_FIT -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VHDL_FILE game_control.vhd
+set_global_assignment -name VHDL_FILE vga_control.vhd
+set_global_assignment -name VHDL_FILE game_logic.vhd
+set_global_assignment -name VHDL_FILE physics.vhd
+set_global_assignment -name QIP_FILE rom.qip
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+set_location_assignment PIN_210 -to clk1
+set_location_assignment PIN_212 -to clk2
+set_location_assignment PIN_194 -to datain
+set_location_assignment PIN_195 -to ps2clk
+set_location_assignment PIN_153 -to rst
+set_location_assignment PIN_230 -to vga_b[2]
+set_location_assignment PIN_228 -to vga_b[1]
+set_location_assignment PIN_226 -to vga_b[0]
+set_location_assignment PIN_233 -to vga_g[2]
+set_location_assignment PIN_232 -to vga_g[1]
+set_location_assignment PIN_231 -to vga_g[0]
+set_location_assignment PIN_237 -to vga_hs
+set_location_assignment PIN_236 -to vga_r[2]
+set_location_assignment PIN_235 -to vga_r[1]
+set_location_assignment PIN_234 -to vga_r[0]
+set_location_assignment PIN_238 -to vga_vs
+set_global_assignment -name VHDL_FILE sram_control.vhd
+set_global_assignment -name QIP_FILE rom_pat.qip
+set_location_assignment PIN_68 -to sram_addr[20]
+set_location_assignment PIN_70 -to sram_addr[19]
+set_location_assignment PIN_72 -to sram_addr[18]
+set_location_assignment PIN_73 -to sram_addr[17]
+set_location_assignment PIN_78 -to sram_addr[16]
+set_location_assignment PIN_79 -to sram_addr[15]
+set_location_assignment PIN_80 -to sram_addr[14]
+set_location_assignment PIN_84 -to sram_addr[13]
+set_location_assignment PIN_86 -to sram_addr[12]
+set_location_assignment PIN_87 -to sram_addr[11]
+set_location_assignment PIN_88 -to sram_addr[10]
+set_location_assignment PIN_105 -to sram_addr[9]
+set_location_assignment PIN_106 -to sram_addr[8]
+set_location_assignment PIN_109 -to sram_addr[7]
+set_location_assignment PIN_110 -to sram_addr[6]
+set_location_assignment PIN_111 -to sram_addr[5]
+set_location_assignment PIN_113 -to sram_addr[4]
+set_location_assignment PIN_114 -to sram_addr[3]
+set_location_assignment PIN_116 -to sram_addr[2]
+set_location_assignment PIN_117 -to sram_addr[1]
+set_location_assignment PIN_118 -to sram_addr[0]
+set_location_assignment PIN_167 -to sram_data[8]
+set_location_assignment PIN_168 -to sram_data[7]
+set_location_assignment PIN_170 -to sram_data[6]
+set_location_assignment PIN_171 -to sram_data[5]
+set_location_assignment PIN_173 -to sram_data[4]
+set_location_assignment PIN_174 -to sram_data[3]
+set_location_assignment PIN_175 -to sram_data[2]
+set_location_assignment PIN_177 -to sram_data[1]
+set_location_assignment PIN_178 -to sram_data[0]
+set_location_assignment PIN_185 -to sram_RW[0]
+set_location_assignment PIN_186 -to sram_RW[1]
+set_location_assignment PIN_184 -to sram_data[31]
+set_location_assignment PIN_128 -to sram_data[30]
+set_location_assignment PIN_130 -to sram_data[29]
+set_location_assignment PIN_131 -to sram_data[28]
+set_location_assignment PIN_132 -to sram_data[27]
+set_location_assignment PIN_134 -to sram_data[26]
+set_location_assignment PIN_135 -to sram_data[25]
+set_location_assignment PIN_136 -to sram_data[24]
+set_location_assignment PIN_137 -to sram_data[23]
+set_location_assignment PIN_139 -to sram_data[22]
+set_location_assignment PIN_140 -to sram_data[21]
+set_location_assignment PIN_141 -to sram_data[20]
+set_location_assignment PIN_149 -to sram_data[19]
+set_location_assignment PIN_150 -to sram_data[18]
+set_location_assignment PIN_155 -to sram_data[17]
+set_location_assignment PIN_156 -to sram_data[16]
+set_location_assignment PIN_157 -to sram_data[15]
+set_location_assignment PIN_159 -to sram_data[14]
+set_location_assignment PIN_161 -to sram_data[13]
+set_location_assignment PIN_162 -to sram_data[12]
+set_location_assignment PIN_164 -to sram_data[11]
+set_location_assignment PIN_165 -to sram_data[10]
+set_location_assignment PIN_166 -to sram_data[9]
+set_location_assignment PIN_216 -to sensor_in_1
+set_location_assignment PIN_218 -to sensor_in_2
+set_global_assignment -name QIP_FILE rom_ball_pos.qip
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
