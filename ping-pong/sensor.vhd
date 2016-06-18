@@ -1,3 +1,4 @@
+--贡献者：柯云劼
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
@@ -41,23 +42,8 @@ signal read_ang, read_acc	: std_logic;
 type r_s is (head, data, reading, check_sum); signal read_state : r_s;
 type d_s is (acc, ang); signal data_type : d_s;
 signal cnt : integer range 0 to 8:= 0;
------------------------------sin_cos_rom通过查表来获取三角函数数值---------------------
---component sin_cos is
---port(
---	clk : in std_logic;
---	angx, angy, angz : in integer range -180 to 180;
---	sinx, cosx, siny, cosy, sinz, cosz : out integer range -1000 to 1000
---);
---end component;
-
 ---------------------------sin_cos信号&物理运算模块-------------------------
---signal ax, ay, az 		: integer range -160000 to 160000;--各方向地轴加速度
---signal vx, vy, vz 		: integer;--各方向地轴速度
---signal px, py, pz 		: integer;--各方向地轴位置
---signal sin_cos_address	: std_logic_vector(9 downto 0);
---signal sin_cos_value	: std_logic_vector(11 downto 0);
 type c_s is (convert); signal compute_state : c_s;
---signal sinx, cosx, siny, cosy, sinz, cosz : integer range -1000 to 1000;--read_ang, read_acc
 signal phy_cnt			: integer range 0 to 100000000;--指示一秒
 
 
@@ -71,12 +57,6 @@ begin
 		data_valid => data_valid,
 		rd => rd_valid,
 		uart_clk => uart_clk);
-
-	--sensor_sin_cos : sin_cos port map(
-	--	clk => clk,
-	--	angx => angx, angy => angy, angz => angz,
-	--	sinx => sinx, siny => siny, sinz => sinz,
-	--	cosx => cosx, cosy => cosy, cosz => cosz);
 ---------------------------利用uart元件读取包信息-----------------------
 read_package : process(clk, rx, rst) is
 variable tp : integer;
@@ -147,8 +127,6 @@ begin
 ---------------------------解析角度信息-------------------------------------
 							when ang =>
 								angx <= (conv_integer(signed(data_buffer(15 downto 8)))*256 + conv_integer(data_buffer(7 downto 0))) / 182;
-								--angy <= ((conv_integer(signed(data_buffer(31 downto 24)))*256 + conv_integer(data_buffer(23 downto 16))) / 182 + 180)*2;
-								--angz <= ((conv_integer(signed(data_buffer(47 downto 40)))*256 + conv_integer(data_buffer(39 downto 32))) / 182 + 180)*2;
 								read_ang <= '1';
 							when others => null;
 						end case;
@@ -164,12 +142,6 @@ begin
 
 if rst = '0' then
 	compute_state <= convert;
-	--vx <= 0;
-	--vy <= 0;
-	--vz <= 0;
-	--px <= 0;
-	--py <= 0;
-	--pz <= 0;
 
 elsif rising_edge(clk) then
 	phy_cnt <= phy_cnt + 1;
@@ -178,41 +150,6 @@ elsif rising_edge(clk) then
 	else
 		x <= ( angx - 70 ) * 73 / 100 ;
 	end if;
-
-			--x <= angx;
-			--y <= angy;
-			--z <= angz;
-			
-			--ax <= (((1000*cosy*cosz)*ax_h+(-1000*cosx*sinz+sinx*siny*cosz)*ay_h+(1000*sinx*sinz+cosx*siny*cosz)*az_h)/1000000/1000)*10;
-			--y <= (((1000*cosy*sinz)*ax_h+(1000*cosx*cosz+sinx*siny*sinz)*ay_h+(-1000*sinx*cosz+cosx*siny*sinz)*az_h)/1000000/1000)*10;
-			--z <= (((-1000*siny)*ax_h+(sinx*cosy)*ay_h+(cosx*cosy)*az_h)/1000/1000 - 8)*10;
-
-			--ax <= ((1000*cosy*cosz)*ax_h+(-1000*cosx*sinz+sinx*siny*cosz)*ay_h+(1000*sinx*sinz+cosx*siny*cosz)*az_h)/1000000/1000;
-			--ay <= ((1000*cosy*sinz)*ax_h+(1000*cosx*cosz+sinx*siny*sinz)*ay_h+(-1000*sinx*cosz+cosx*siny*sinz)*az_h)/1000000/1000;
-			--az <= ((-1000*siny)*ax_h+(sinx*cosy)*ay_h+(cosx*cosy)*az_h)/1000/1000 - 8;
-
-
-			--compute_state <= tri_angel;
-			--if phy_cnt = 100000000 then --每秒清零
-			--	vx <= 0;
-			--	vy <= 0;
-			--	vz <= 0;
-			--	px <= 0;
-			--	py <= 0;
-			--	pz <= 0;
-			--elsif phy_cnt mod 10000000 = 0 and (ax < 0 or ax >0 or ay < 0 or ay >0 or az < 0 or az >0 ) then--取样速率10hz
-			--	vx <= vx + ax;
-			--	vy <= vy + ay;
-			--	vz <= vz + az;
-			--	px <= px + vx;
-			--	py <= py + vy;
-			--	pz <= pz + vz;
-			--end if;
-			--x <= px;
-			--x <= ax*5; y <= ay*5; z <= az*5;
-
-		--when speed2posi =>	
-	
 end if;
 end process;
   

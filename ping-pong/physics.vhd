@@ -1,3 +1,4 @@
+--贡献者：柯云劼
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
@@ -120,11 +121,7 @@ begin
 ------------------  复位以及获得拍信息  ----------------------
 	process(rst, clk)
 	begin
-		if (rst = '0') then
---			ballX <= ballXRange / 2;
---			ballY <= ballYRange / 3;
---			ballZ <= ballZRange / 5;
-			
+		if (rst = '0') then			
 			pat1X <= 140;
 			pat1Y <= 90;
 			pat1Z <= 20;
@@ -135,11 +132,6 @@ begin
 		elsif rising_edge(clk) then
 			pat1X <= pat1_X;
 			pat2X <= pat2_X;
-			--pat1Y <= 0+10;
-			--pat2Y <= patYRange-10;
-			--pat1X <= x/(720/(patXRange));--+patXRange/2;
-			--pat1Y <= y/(720/(patYRange));--+patYRange/2;																																																																									
-			--pat1Z <= z/(720/(patZRange));--+patZRange/2;
 		end if;
 	end process;
 	
@@ -250,7 +242,6 @@ begin
 							ball_v <= pat1_v;
 							ball_state <= pat1Range;
 							catch_state <= pat2;
-						--elsif ((ball_Z > ballZRange - 20 and ball_X > pat2_X - 10 and ball_X < pat2_X + 10) and ball_state /= pat2Range and catch_state = pat2) then
 						elsif ball_Z > ballZRange - boderZRange and ball_X > patXRange - pat2_X - 20 and ball_X < patXRange - pat2_X + 20 and catch_state = pat2 then --and catch_state = pat2 then
 							if ball_X < patXRange - pat2_X and ball_ang > (90 - angRange) then--pat2拍左侧
 								ball_ang <= -(ball_ang - 10);
